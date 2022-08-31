@@ -1,35 +1,30 @@
 package com.examplepokedex.igormattos.tvshowapp.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
-import com.examplepokedex.igormattos.tvshowapp.services.model.TvShowItem
-import com.examplepokedex.igormattos.tvshowapp.services.repository.TvShowRepository
+import com.examplepokedex.igormattos.tvshowapp.services.model.MovieResponse
+import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel: ViewModel() {
 
-    private val repository = TvShowRepository()
+    private val _movie = MutableLiveData<MovieResponse>()
+    val movie: LiveData<MovieResponse> = _movie
 
-    private val _shows = MutableLiveData<List<TvShowItem>>()
-    val shows: LiveData<List<TvShowItem>> = _shows
+    private val repository = MovieRepository()
 
-
-    fun list(){
-        repository.listTvShows(object : ApiListener<List<TvShowItem>>{
-            override fun onSuccess(result: List<TvShowItem>) {
-                _shows.value = result
+    fun getListMovie(){
+        repository.getMovieList(object : ApiListener<MovieResponse>{
+            override fun onSuccess(result: MovieResponse) {
+                _movie.value = result
             }
 
             override fun onFailure(message: String) {
-
+                TODO("Not yet implemented")
             }
 
         })
-
-
-
     }
 
 }

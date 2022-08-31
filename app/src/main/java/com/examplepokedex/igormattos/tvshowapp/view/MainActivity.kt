@@ -6,14 +6,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityMainBinding
-import com.examplepokedex.igormattos.tvshowapp.view.adapter.TvShowAdapter
+import com.examplepokedex.igormattos.tvshowapp.view.adapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
-    private val adapter = TvShowAdapter()
+    private lateinit var adapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-        binding.recyclerView.adapter = adapter
+//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        binding.recyclerView.adapter = adapter
 
         observe()
 
@@ -32,12 +32,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.list()
+        viewModel.getListMovie()
+
     }
 
     private fun observe() {
-        viewModel.shows.observe(this, Observer {
-            adapter.setTvShowList(it)
+        viewModel.movie.observe(this, Observer {
+            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+            adapter = MovieAdapter(it.results)
+            binding.recyclerView.adapter = adapter
+
         })
 
     }
