@@ -9,8 +9,8 @@ import com.examplepokedex.igormattos.tvshowapp.services.model.Movie
 
 class MovieViewHolder(private val binding: RowListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private var movieTitle = binding.movieTitle
-    private val date = binding.movieReleaseDate
+    private var movieTitle = binding.textTitle
+    private val date = binding.textReleaseDate
 
     fun bind(movie: Movie) {
 
@@ -19,7 +19,7 @@ class MovieViewHolder(private val binding: RowListBinding) : RecyclerView.ViewHo
 
         Glide.with(itemView.context)
             .load(Constants.URL.IMAGE_BASE + movie.poster)
-            .into(binding.moviePoster)
+            .into(binding.imgMoviePoster)
 
     }
 }

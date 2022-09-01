@@ -21,7 +21,4 @@ class MovieAdapter(private val moviesList: List<Movie>): RecyclerView.Adapter<Mo
         return moviesList.size
     }
 
-//    fun updateMovies(list: List<Movie>) {
-//        movieList = list
-//    }
 }

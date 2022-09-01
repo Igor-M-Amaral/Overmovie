@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityMainBinding
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.MovieAdapter
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observe() {
         viewModel.movie.observe(this, Observer {
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+            binding.recyclerView.layoutManager = GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false)
             adapter = MovieAdapter(it.results)
             binding.recyclerView.adapter = adapter
 
