@@ -2,11 +2,12 @@ package com.examplepokedex.igormattos.tvshowapp.services.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
-    val results: List<Movie>
+data class PopularResponse(
+    @SerializedName("results")
+    val PopularResults: List<PopularResult>
 )
 
-data class Movie(
+data class PopularResult(
     @SerializedName("id")
     val id: String?,
 

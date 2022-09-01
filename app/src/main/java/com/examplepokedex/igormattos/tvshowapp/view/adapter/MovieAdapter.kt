@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.examplepokedex.igormattos.tvshowapp.databinding.RowListBinding
-import com.examplepokedex.igormattos.tvshowapp.services.model.Movie
+import com.examplepokedex.igormattos.tvshowapp.services.model.UpcomingResult
 
-class MovieAdapter(private val moviesList: List<Movie>): RecyclerView.Adapter<MovieViewHolder>() {
+class MovieAdapter(private val moviesList: List<UpcomingResult>): RecyclerView.Adapter<MovieViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

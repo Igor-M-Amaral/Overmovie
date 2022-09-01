@@ -19,12 +19,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar?.hide()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-//
-//        binding.recyclerView.adapter = adapter
 
         observe()
 
@@ -33,16 +31,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getListMovie()
+        viewModel.getPopularList()
+        viewModel.getUpcomingList()
 
     }
 
     private fun observe() {
-        viewModel.movie.observe(this, Observer {
+//        viewModel.popularMovies.observe(this, Observer {
+//            binding.recyclerView.layoutManager = GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false)
+//            adapter = MovieAdapter(it.PopularResults)
+//            binding.recyclerView.adapter = adapter
+//        })
+        viewModel.upcomingMovies.observe(this, Observer {
             binding.recyclerView.layoutManager = GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false)
-            adapter = MovieAdapter(it.results)
+            adapter = MovieAdapter(it.UpcomingResults)
             binding.recyclerView.adapter = adapter
-
         })
 
     }
