@@ -4,24 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
-import com.examplepokedex.igormattos.tvshowapp.services.model.PopularResponse
-import com.examplepokedex.igormattos.tvshowapp.services.model.UpcomingResponse
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
 class MainViewModel: ViewModel() {
 
-    private val _popularMovies = MutableLiveData<PopularResponse>()
-    val popularMovies: LiveData<PopularResponse> = _popularMovies
+    private val _movies = MutableLiveData<MoviesModel>()
+    val movies: LiveData<MoviesModel> = _movies
 
-    private val _upcomingMovies = MutableLiveData<UpcomingResponse>()
-    val upcomingMovies: LiveData<UpcomingResponse> = _upcomingMovies
+    private val _upcomingMovies = MutableLiveData<MoviesModel>()
+    val upcomingMovies: LiveData<MoviesModel> = _upcomingMovies
 
     private val repository = MovieRepository()
 
     fun getPopularList(){
-        repository.getPopularList(object : ApiListener<PopularResponse>{
-            override fun onSuccess(result: PopularResponse) {
-                _popularMovies.value = result
+        repository.getPopularList(object : ApiListener<MoviesModel>{
+            override fun onSuccess(result: MoviesModel) {
+                _movies.value = result
             }
 
             override fun onFailure(message: String) {
@@ -31,8 +30,8 @@ class MainViewModel: ViewModel() {
     }
 
     fun getUpcomingList(){
-        repository.getUpcomingList(object : ApiListener<UpcomingResponse>{
-            override fun onSuccess(result: UpcomingResponse) {
+        repository.getUpcomingList(object : ApiListener<MoviesModel>{
+            override fun onSuccess(result: MoviesModel) {
                 _upcomingMovies.value = result
             }
 

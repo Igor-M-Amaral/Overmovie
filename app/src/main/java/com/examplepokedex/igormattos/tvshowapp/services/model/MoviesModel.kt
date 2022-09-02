@@ -3,12 +3,12 @@ package com.examplepokedex.igormattos.tvshowapp.services.model
 import com.google.gson.annotations.SerializedName
 
 
-data class UpcomingResponse(
+data class MoviesModel(
     @SerializedName("results")
-    val UpcomingResults: List<UpcomingResult>
+    val moviesResults: List<MoviesResult>
 )
 
-data class UpcomingResult(
+data class MoviesResult(
     @SerializedName("adult")
     val adult: Boolean,
 
