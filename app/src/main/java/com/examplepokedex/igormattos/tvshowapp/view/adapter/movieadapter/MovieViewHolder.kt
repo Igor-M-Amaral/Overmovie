@@ -1,15 +1,13 @@
-package com.examplepokedex.igormattos.tvshowapp.view.adapter
+package com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter
 
-import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.examplepokedex.igormattos.tvshowapp.databinding.RowListBinding
+import com.examplepokedex.igormattos.tvshowapp.databinding.RowMoviesBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
-import com.examplepokedex.igormattos.tvshowapp.view.OverViewActivity
 
 
-class MovieViewHolder(private val binding: RowListBinding) : RecyclerView.ViewHolder(binding.root) {
+class MovieViewHolder(private val binding: RowMoviesBinding) : RecyclerView.ViewHolder(binding.root) {
 
     private var movieTitle = binding.textTitle
     private val date = binding.textReleaseDate

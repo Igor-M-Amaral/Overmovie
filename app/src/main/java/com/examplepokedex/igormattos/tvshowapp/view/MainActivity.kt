@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityMainBinding
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
-import com.examplepokedex.igormattos.tvshowapp.view.adapter.MovieAdapter
+import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -26,17 +26,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        viewModel.getPopularList()
+        viewModel.getUpcomingList()
+
         observe()
 
         setContentView(binding.root)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getPopularList()
-        viewModel.getUpcomingList()
-
-    }
 
     private fun observe() {
         viewModel.upcomingMovies.observe(this, Observer {
@@ -51,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openOverView(moviesResult: MoviesResult) {
         val intent = Intent(applicationContext, OverViewActivity::class.java)
+        intent.putExtra("ID", moviesResult.id)
         intent.putExtra("TITLE", moviesResult.title)
         intent.putExtra("BACKDROP_PATH", moviesResult.backdrop_path)
         intent.putExtra("DATE", moviesResult.release_date)

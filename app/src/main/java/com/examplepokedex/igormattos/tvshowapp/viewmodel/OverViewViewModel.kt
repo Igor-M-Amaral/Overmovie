@@ -8,11 +8,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
+import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
+import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
 class OverViewViewModel(application: Application) : AndroidViewModel(application) {
 
     val context = application.applicationContext
+    val repository = MovieRepository()
+
+    private val _cast = MutableLiveData<CastModel>()
+    val cast: LiveData<CastModel> = _cast
 
     private var _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
@@ -26,21 +34,28 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
     private var _overview = MutableLiveData<String>()
     val overview: LiveData<String> = _overview
 
-
-    fun setPoster(bundle: Bundle, imgMovieLargePoster: ImageView) {
+    fun setBundle(bundle: Bundle, imgMovieLargePoster: ImageView) {
         Glide.with(context)
             .load(Constants.URL.IMAGE_BASE + bundle.getString("BACKDROP_PATH"))
             .into(imgMovieLargePoster)
-    }
 
-    fun setText(
-        bundle: Bundle,
-    ) {
         _title.value = bundle.getString("TITLE")
         _date.value = bundle.getString("DATE")
         _popularity.value = bundle.getDouble("POPULARITY").toString()
         _overview.value = bundle.getString("OVERVIEW")
+    }
 
+    fun getCastList(id: Int) {
+        repository.getCastList(id, object : ApiListener<CastModel> {
+            override fun onSuccess(result: CastModel) {
+                _cast.value = result
+            }
+
+            override fun onFailure(message: String) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }

@@ -1,9 +1,9 @@
-package com.examplepokedex.igormattos.tvshowapp.view.adapter
+package com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.examplepokedex.igormattos.tvshowapp.databinding.RowListBinding
+import com.examplepokedex.igormattos.tvshowapp.databinding.RowMoviesBinding
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 
 class MovieAdapter(private val onItemClicked: (MoviesResult) -> Unit): RecyclerView.Adapter<MovieViewHolder>() {
@@ -11,7 +11,8 @@ class MovieAdapter(private val onItemClicked: (MoviesResult) -> Unit): RecyclerV
     private var moviesList = mutableListOf<MoviesResult>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(RowListBinding.inflate(LayoutInflater.from(parent.context), parent, false))    }
+        return MovieViewHolder(RowMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = moviesList[position]
