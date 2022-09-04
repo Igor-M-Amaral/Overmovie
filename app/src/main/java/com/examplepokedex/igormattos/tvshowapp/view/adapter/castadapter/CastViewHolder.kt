@@ -2,6 +2,8 @@ package com.examplepokedex.igormattos.tvshowapp.view.adapter.castadapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.RowCastBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastResult
@@ -20,7 +22,12 @@ class CastViewHolder(private val bindind: RowCastBinding) : RecyclerView.ViewHol
         characterName.text = cast.character
         department.text = cast.known_for_department
 
+        val resquestOption = RequestOptions()
+            .placeholder(R.drawable.person_placeholder)
+            .error(R.drawable.person_placeholder)
+
         Glide.with(itemView.context)
+            .applyDefaultRequestOptions(resquestOption)
             .load(Constants.URL.IMAGE_BASE + cast.profile_path)
             .into(bindind.imgCastPhoto)
 

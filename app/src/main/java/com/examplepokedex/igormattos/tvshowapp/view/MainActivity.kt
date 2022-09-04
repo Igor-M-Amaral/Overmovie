@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityMainBinding
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.getUpcomingList()
 
         observe()
-
         setContentView(binding.root)
     }
 
@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("DATE", moviesResult.release_date)
         intent.putExtra("POPULARITY", moviesResult.popularity)
         intent.putExtra("OVERVIEW", moviesResult.overview)
+        intent.putExtra("VOTE", moviesResult.vote_average)
         startActivity(intent)
     }
 }

@@ -15,6 +15,8 @@ class MainViewModel: ViewModel() {
     private val _upcomingMovies = MutableLiveData<MoviesModel>()
     val upcomingMovies: LiveData<MoviesModel> = _upcomingMovies
 
+    val errorMessage = MutableLiveData<String>()
+
     private val repository = MovieRepository()
 
     fun getPopularList(){
@@ -24,7 +26,7 @@ class MainViewModel: ViewModel() {
             }
 
             override fun onFailure(message: String) {
-                TODO("Not yet implemented")
+                errorMessage.postValue(message)
             }
         })
     }
@@ -36,7 +38,7 @@ class MainViewModel: ViewModel() {
             }
 
             override fun onFailure(message: String) {
-                TODO("Not yet implemented")
+                errorMessage.postValue(message)
             }
         })
     }

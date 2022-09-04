@@ -34,6 +34,9 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
     private var _overview = MutableLiveData<String>()
     val overview: LiveData<String> = _overview
 
+    private var _vote = MutableLiveData<String>()
+    val vote: LiveData<String> = _vote
+
     fun setBundle(bundle: Bundle, imgMovieLargePoster: ImageView) {
         Glide.with(context)
             .load(Constants.URL.IMAGE_BASE + bundle.getString("BACKDROP_PATH"))
@@ -43,6 +46,7 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
         _date.value = bundle.getString("DATE")
         _popularity.value = bundle.getDouble("POPULARITY").toString()
         _overview.value = bundle.getString("OVERVIEW")
+        _vote.value = bundle.getFloat("VOTE").toString()
     }
 
     fun getCastList(id: Int) {

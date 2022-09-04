@@ -9,12 +9,12 @@ import retrofit2.http.Path
 
 interface MovieService {
 
-    @GET(Constants.URL.POPULAR_POINT)
+    @GET(Constants.URL.POPULAR_POINT + Constants.APIKEY.KEY)
     fun getPopularList(): Call<MoviesModel>
 
-    @GET(Constants.URL.UPCOMING_POINT)
+    @GET(Constants.URL.UPCOMING_POINT + Constants.APIKEY.KEY)
     fun getUpcomingList(): Call<MoviesModel>
 
-    @GET("/3/movie/{id}/credits?api_key=bbf5a3000e95f1dddf266b5e187d4b21")
+    @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     fun getCastList(@Path(value = "id", encoded = true) id: Int): Call<CastModel>
 }

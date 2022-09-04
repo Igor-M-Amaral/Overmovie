@@ -47,6 +47,9 @@ class OverViewActivity : AppCompatActivity() {
         viewModel.overview.observe(this, Observer{ overview->
             binding.textOverview.text = overview
         })
+        viewModel.vote.observe(this, Observer{ vote->
+            binding.textAverage.text = vote
+        })
         viewModel.cast.observe(this, Observer{
             binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerView.adapter = adapter

@@ -27,6 +27,9 @@ data class MoviesResult(
     @SerializedName("popularity")
     val popularity: Double,
 
+    @SerializedName("vote_average")
+    val vote_average: Float,
+
     @SerializedName("poster_path")
     val poster_path: String,
 

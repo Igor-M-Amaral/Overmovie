@@ -22,7 +22,7 @@ class MovieRepository {
             }
 
             override fun onFailure(call: Call<MoviesModel>, t: Throwable) {
-                TODO("Not yet implemented")
+                listener.onFailure(t.message.toString())
             }
         })
     }
@@ -38,7 +38,7 @@ class MovieRepository {
             }
 
             override fun onFailure(call: Call<MoviesModel>, t: Throwable) {
-                TODO("Not yet implemented")
+                listener.onFailure(t.message.toString())
             }
         })
     }
