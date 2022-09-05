@@ -10,7 +10,16 @@ class Constants private constructor(){
         const val CAST = "/3/movie/{id}/credits?api_key="
     }
     object APIKEY{
-        const val KEY = "PUT YOUR API KEY HERE"
+        const val KEY = "38e916798d955f2ece239fec2cb84d59"
+    }
+
+    object BUNDLE {
+        const val TYPEFILTER = "taskfilter"
+    }
+
+    object FILTER {
+        const val UPCOMING = 0
+        const val POPULAR = 1
     }
 
 }

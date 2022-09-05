@@ -7,7 +7,8 @@ import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
+
 
     private val _movies = MutableLiveData<MoviesModel>()
     val movies: LiveData<MoviesModel> = _movies
@@ -19,8 +20,9 @@ class MainViewModel: ViewModel() {
 
     private val repository = MovieRepository()
 
-    fun getPopularList(){
-        repository.getPopularList(object : ApiListener<MoviesModel>{
+
+    fun getPopularList() {
+        repository.getPopularList(object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
                 _movies.value = result
             }
@@ -31,8 +33,8 @@ class MainViewModel: ViewModel() {
         })
     }
 
-    fun getUpcomingList(){
-        repository.getUpcomingList(object : ApiListener<MoviesModel>{
+    fun getUpcomingList() {
+        repository.getUpcomingList(object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
                 _upcomingMovies.value = result
             }

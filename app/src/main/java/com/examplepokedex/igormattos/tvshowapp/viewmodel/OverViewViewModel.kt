@@ -3,7 +3,6 @@ package com.examplepokedex.igormattos.tvshowapp.viewmodel
 import android.app.Application
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,13 +10,14 @@ import com.bumptech.glide.Glide
 import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
-import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
 class OverViewViewModel(application: Application) : AndroidViewModel(application) {
 
-    val context = application.applicationContext
-    val repository = MovieRepository()
+
+    private val context = application.applicationContext
+
+    private val repository = MovieRepository()
 
     private val _cast = MutableLiveData<CastModel>()
     val cast: LiveData<CastModel> = _cast
