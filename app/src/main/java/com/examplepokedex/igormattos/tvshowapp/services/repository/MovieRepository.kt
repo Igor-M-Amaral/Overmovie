@@ -8,52 +8,37 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieRepository {
+class MovieRepository : BaseRepository() {
 
     private val remote = RetrofitClient.getService(MovieService::class.java)
 
-    fun getPopularList(listener: ApiListener<MoviesModel>){
+    fun getPopularList(listener: ApiListener<MoviesModel>) {
         val call = remote.getPopularList()
-        call.enqueue(object : Callback<MoviesModel>{
-            override fun onResponse(call: Call<MoviesModel>, response: Response<MoviesModel>) {
-                if (response.code() == 200){
-                    listener.onSuccess(response.body()!!)
-                }
-            }
 
-            override fun onFailure(call: Call<MoviesModel>, t: Throwable) {
-                listener.onFailure(t.message.toString())
-            }
-        })
+        executeCall(call, listener)
     }
 
-    fun getUpcomingList(listener: ApiListener<MoviesModel>){
+    fun getUpcomingList(listener: ApiListener<MoviesModel>) {
         val call = remote.getUpcomingList()
-        call.enqueue(object : Callback<MoviesModel>{
-            override fun onResponse(
-                call: Call<MoviesModel>,
-                response: Response<MoviesModel>
-            ) {
-                listener.onSuccess(response.body()!!)
-            }
 
-            override fun onFailure(call: Call<MoviesModel>, t: Throwable) {
-                listener.onFailure(t.message.toString())
-            }
-        })
+        executeCall(call, listener)
     }
 
-    fun getCastList(id: Int, listener: ApiListener<CastModel>){
+    fun getCastList(id: Int, listener: ApiListener<CastModel>) {
         val call = remote.getCastList(id)
-        call.enqueue(object : Callback<CastModel>{
-            override fun onResponse(call: Call<CastModel>, response: Response<CastModel>) {
-                listener.onSuccess(response.body()!!)
-            }
 
-            override fun onFailure(call: Call<CastModel>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
+        executeCall(call, listener)
+    }
 
-        })
+    fun getSimilarMovies(id: Int, listener: ApiListener<MoviesModel>) {
+        val call = remote.getSimilarMovies(id)
+
+        executeCall(call, listener)
+    }
+
+    fun getTrendingMovies(listener: ApiListener<MoviesModel>){
+        val call = remote.getTrendingMovies()
+
+        executeCall(call, listener)
     }
 }

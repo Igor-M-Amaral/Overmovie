@@ -16,6 +16,9 @@ class MainViewModel : ViewModel() {
     private val _upcomingMovies = MutableLiveData<MoviesModel>()
     val upcomingMovies: LiveData<MoviesModel> = _upcomingMovies
 
+    private val _trendingMovies = MutableLiveData<MoviesModel>()
+    val trendingMovies: LiveData<MoviesModel> = _trendingMovies
+
     val errorMessage = MutableLiveData<String>()
 
     private val repository = MovieRepository()
@@ -42,6 +45,19 @@ class MainViewModel : ViewModel() {
             override fun onFailure(message: String) {
                 errorMessage.postValue(message)
             }
+        })
+    }
+
+    fun getTrendingMovies(){
+        repository.getTrendingMovies(object : ApiListener<MoviesModel>{
+            override fun onSuccess(result: MoviesModel) {
+                _trendingMovies.value = result
+            }
+
+            override fun onFailure(message: String) {
+                errorMessage.postValue(message)
+            }
+
         })
     }
 

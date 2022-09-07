@@ -6,6 +6,7 @@ import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieService {
 
@@ -15,6 +16,16 @@ interface MovieService {
     @GET(Constants.URL.UPCOMING_POINT + Constants.APIKEY.KEY)
     fun getUpcomingList(): Call<MoviesModel>
 
+    @GET(Constants.URL.TRENDING + Constants.APIKEY.KEY)
+    fun getTrendingMovies(): Call<MoviesModel>
+
     @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     fun getCastList(@Path(value = "id", encoded = true) id: Int): Call<CastModel>
+
+    @GET(Constants.URL.SIMILAR + Constants.APIKEY.KEY)
+    fun getSimilarMovies(@Path(value = "id", encoded = true) id: Int): Call<MoviesModel>
+
+    @GET(Constants.URL.SEARCH + Constants.APIKEY.KEY)
+    fun getSearch(@Query("query") name: String): Call<MoviesModel>
+
 }

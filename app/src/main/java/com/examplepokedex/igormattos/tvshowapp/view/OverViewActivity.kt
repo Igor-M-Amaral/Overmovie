@@ -1,24 +1,25 @@
 package com.examplepokedex.igormattos.tvshowapp.view
 
-import android.R
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityOverViewBinding
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.castadapter.CastAdapter
+import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.OverViewViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class OverViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOverViewBinding
     private lateinit var viewModel: OverViewViewModel
-    private val adapter = CastAdapter()
+    private lateinit var adapterSimilar: MovieAdapter
+    private val adapterCast = CastAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +29,16 @@ class OverViewActivity : AppCompatActivity() {
         binding = ActivityOverViewBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[OverViewViewModel::class.java]
 
-
         intent.extras?.let {
             viewModel.setBundle(it, binding.imgMovieLargePoster)
             viewModel.getCastList(it.getInt("ID"))
+            viewModel.getSimilarMovies(it.getInt("ID"))
         }
+
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
+
         observer()
 
         setContentView(binding.root)
@@ -57,9 +63,30 @@ class OverViewActivity : AppCompatActivity() {
         viewModel.cast.observe(this, Observer {
             binding.recyclerView.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            binding.recyclerView.adapter = adapter
-            adapter.setCastList(it.cast)
+            binding.recyclerView.adapter = adapterCast
+            adapterCast.setCastList(it.cast)
         })
+        viewModel.movies.observe(this, Observer {
+            binding.recyclerViewSimiliar.layoutManager =
+                GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
+            adapterSimilar = MovieAdapter {
+                openOverView(it)
+            }
+            binding.recyclerViewSimiliar.adapter = adapterSimilar
+            adapterSimilar.setMovieList(it.moviesResults)
+        })
+    }
+
+    private fun openOverView(moviesResult: MoviesResult) {
+        val intent = Intent(applicationContext, OverViewActivity::class.java)
+        intent.putExtra("ID", moviesResult.id)
+        intent.putExtra("TITLE", moviesResult.title)
+        intent.putExtra("BACKDROP_PATH", moviesResult.backdrop_path)
+        intent.putExtra("DATE", moviesResult.release_date)
+        intent.putExtra("POPULARITY", moviesResult.popularity)
+        intent.putExtra("OVERVIEW", moviesResult.overview)
+        intent.putExtra("VOTE", moviesResult.vote_average)
+        startActivity(intent)
 
     }
 }

@@ -9,6 +9,9 @@
         android:id="@+id/nav_popular"
         android:icon="@drawable/ic_popular"
         android:title="Popular" />
-
+    <item
+        android:id="@+id/nav_trending"
+        android:icon="@drawable/ic_trending"
+        android:title="Trending" />
 
 </menu>

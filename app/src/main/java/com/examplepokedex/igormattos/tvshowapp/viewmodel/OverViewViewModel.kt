@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
 class OverViewViewModel(application: Application) : AndroidViewModel(application) {
@@ -37,10 +38,14 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
     private var _vote = MutableLiveData<String>()
     val vote: LiveData<String> = _vote
 
+    private val _movies = MutableLiveData<MoviesModel>()
+    val movies: LiveData<MoviesModel> = _movies
+
     fun setBundle(bundle: Bundle, imgMovieLargePoster: ImageView) {
         Glide.with(context)
             .load(Constants.URL.IMAGE_BASE + bundle.getString("BACKDROP_PATH"))
             .into(imgMovieLargePoster)
+
 
         _title.value = bundle.getString("TITLE")
         _date.value = bundle.getString("DATE")
@@ -53,6 +58,18 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
         repository.getCastList(id, object : ApiListener<CastModel> {
             override fun onSuccess(result: CastModel) {
                 _cast.value = result
+            }
+
+            override fun onFailure(message: String) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun getSimilarMovies(id: Int){
+        repository.getSimilarMovies(id, object : ApiListener<MoviesModel>{
+            override fun onSuccess(result: MoviesModel) {
+                _movies.value = result
             }
 
             override fun onFailure(message: String) {

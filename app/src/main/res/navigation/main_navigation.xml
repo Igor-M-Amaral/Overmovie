@@ -20,4 +20,11 @@
         android:name="com.examplepokedex.igormattos.tvshowapp.view.PopularFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment"/>
+
+    <fragment
+        android:id="@+id/nav_trending"
+        android:name="com.examplepokedex.igormattos.tvshowapp.view.adapter.TrendingFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/home_fragment"/>
+
 </navigation>

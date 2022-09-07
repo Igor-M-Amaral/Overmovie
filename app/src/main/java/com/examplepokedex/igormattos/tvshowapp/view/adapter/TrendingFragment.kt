@@ -1,4 +1,4 @@
-package com.examplepokedex.igormattos.tvshowapp.view
+package com.examplepokedex.igormattos.tvshowapp.view.adapter
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.HomeFragmentBinding
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import com.examplepokedex.igormattos.tvshowapp.view.OverViewActivity
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MainViewModel
 
-class HomeFragment : Fragment() {
+class TrendingFragment: Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
     private lateinit var viewModel: MainViewModel
@@ -30,9 +31,9 @@ class HomeFragment : Fragment() {
         binding = HomeFragmentBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        viewModel.getUpcomingList()
+        viewModel.getTrendingMovies()
 
-        binding.textSelected.text = "Upcoming"
+        binding.textSelected.text = "Trending"
 
         observe()
 
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer {
+        viewModel.trendingMovies.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.layoutManager =
                 GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
             adapter = MovieAdapter {
