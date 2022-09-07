@@ -10,21 +10,33 @@
         android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
-        <action
-            android:id="@+id/action_nav_upcoming_to_nav_popular"
-            app:destination="@id/nav_popular" />
+        <argument
+            android:name="moviefilter"
+            app:argType="integer"
+            android:defaultValue="0"/>
     </fragment>
 
     <fragment
         android:id="@+id/nav_popular"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.PopularFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <argument
+            android:name="moviefilter"
+            app:argType="integer"
+            android:defaultValue="1"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_trending"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.adapter.TrendingFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <argument
+            android:name="moviefilter"
+            app:argType="integer"
+            android:defaultValue="2"/>
+    </fragment>
+
 
 </navigation>

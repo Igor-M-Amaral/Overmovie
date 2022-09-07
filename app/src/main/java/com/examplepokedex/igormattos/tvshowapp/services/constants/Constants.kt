@@ -18,12 +18,13 @@ class Constants private constructor(){
     }
 
     object BUNDLE {
-        const val TYPEFILTER = "taskfilter"
+        const val MOVIEFILTER = "moviefilter"
     }
 
     object FILTER {
         const val UPCOMING = 0
         const val POPULAR = 1
+        const val TRENDING = 2
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.databinding.HomeFragmentBinding
+import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MainViewModel
@@ -21,6 +22,8 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: MovieAdapter
 
+    private var movieFilter = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,17 +33,20 @@ class HomeFragment : Fragment() {
         binding = HomeFragmentBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        viewModel.getUpcomingList()
-
-        binding.textSelected.text = "Upcoming"
+        movieFilter = requireArguments().getInt(Constants.BUNDLE.MOVIEFILTER, 0)
 
         observe()
 
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.listMovie(movieFilter)
+    }
+
     private fun observe() {
-        viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer {
+        viewModel.movies.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.layoutManager =
                 GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
             adapter = MovieAdapter {
@@ -48,6 +54,9 @@ class HomeFragment : Fragment() {
             }
             binding.recyclerView.adapter = adapter
             adapter.setMovieList(it.moviesResults)
+        })
+        viewModel.nameTitle.observe(viewLifecycleOwner, Observer {
+            binding.textSelected.text = it
         })
     }
 

@@ -41,4 +41,10 @@ class MovieRepository : BaseRepository() {
 
         executeCall(call, listener)
     }
+
+    fun getSearch(name: String, listener: ApiListener<MoviesModel>){
+        val call = remote.getSearch(name)
+
+        executeCall(call, listener)
+    }
 }

@@ -22,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Popular Movies"
+            tools:text="Popular Movies"
             android:textColor="@color/white"
             android:textSize="32dp"
             android:textStyle="bold" />
