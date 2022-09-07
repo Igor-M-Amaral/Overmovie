@@ -4,38 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@id/container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_selected"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#1F1F1F">
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/red"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        tools:text="Popular" />
 
-        <TextView
-            android:id="@+id/text_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-condensed-medium"
-            tools:text="Popular Movies"
-            android:textColor="@color/white"
-            android:textSize="32dp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="20dp"
+        android:background="#BDBDBD"
+        android:layout_below="@id/text_selected" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/container"
+        android:layout_below="@+id/text_selected"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="7dp"
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="3dp"
         android:scrollbars="vertical"
