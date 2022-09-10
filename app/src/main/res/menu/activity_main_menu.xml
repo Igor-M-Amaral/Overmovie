@@ -14,4 +14,9 @@
         android:icon="@drawable/ic_trending"
         android:title="Trending" />
 
+    <item
+        android:id="@+id/nav_rated"
+        android:icon="@drawable/ic_rated"
+        android:title="TOP RATED" />
+
 </menu>

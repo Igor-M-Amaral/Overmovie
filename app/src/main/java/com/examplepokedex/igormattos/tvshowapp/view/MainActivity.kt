@@ -1,9 +1,12 @@
 package com.examplepokedex.igormattos.tvshowapp.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -13,14 +16,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         supportActionBar?.hide()
+
+        setContentView(binding.root)
+
 
         val navHostFragment =
             (supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment)
 
         val navController = navHostFragment.navController
-        binding.bottonNavigationView.setupWithNavController(navController)
+        binding.buttonNavigationView.setupWithNavController(navController)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_search){
+            return false
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
+
+

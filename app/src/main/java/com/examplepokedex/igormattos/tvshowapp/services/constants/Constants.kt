@@ -10,6 +10,7 @@ class Constants private constructor(){
         const val SIMILAR = "/3/movie/{id}/similar?api_key="
         const val SEARCH = "/3/search/movie?api_key="
         const val TRENDING = "/3/trending/movie/day?api_key="
+        const val RATED = "/3/movie/top_rated?api_key="
 
         const val IMAGE_BASE = "https://image.tmdb.org/t/p/w500/"
     }
@@ -25,6 +26,7 @@ class Constants private constructor(){
         const val UPCOMING = 0
         const val POPULAR = 1
         const val TRENDING = 2
+        const val RATED = 3
     }
 
 }

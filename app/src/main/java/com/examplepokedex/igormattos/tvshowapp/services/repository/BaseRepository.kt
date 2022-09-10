@@ -1,6 +1,6 @@
 package com.examplepokedex.igormattos.tvshowapp.services.repository
 
-import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -38,5 +38,16 @@
             android:defaultValue="2"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_rated"
+        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/home_fragment">
+        <argument
+            android:name="moviefilter"
+            app:argType="integer"
+            android:defaultValue="3"/>
+    </fragment>
+
 
 </navigation>

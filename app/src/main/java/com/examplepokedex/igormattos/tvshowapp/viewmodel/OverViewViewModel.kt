@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
-import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
@@ -67,7 +67,7 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getSimilarMovies(id: Int){
-        repository.getSimilarMovies(id, object : ApiListener<MoviesModel>{
+        repository.getSimilarMovies(id, object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
                 _movies.value = result
             }

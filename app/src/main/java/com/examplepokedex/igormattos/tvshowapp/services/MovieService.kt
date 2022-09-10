@@ -19,6 +19,9 @@ interface MovieService {
     @GET(Constants.URL.TRENDING + Constants.APIKEY.KEY)
     fun getTrendingMovies(): Call<MoviesModel>
 
+    @GET(Constants.URL.RATED + Constants.APIKEY.KEY)
+    fun getRated(): Call<MoviesModel>
+
     @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     fun getCastList(@Path(value = "id", encoded = true) id: Int): Call<CastModel>
 

@@ -1,12 +1,9 @@
 package com.examplepokedex.igormattos.tvshowapp.services.repository
 
-import com.examplepokedex.igormattos.tvshowapp.services.ApiListener
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.MovieService
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieRepository : BaseRepository() {
 
@@ -24,11 +21,18 @@ class MovieRepository : BaseRepository() {
         executeCall(call, listener)
     }
 
+    fun getRated(listener: ApiListener<MoviesModel>) {
+        val call = remote.getRated()
+
+        executeCall(call, listener)
+    }
+
     fun getCastList(id: Int, listener: ApiListener<CastModel>) {
         val call = remote.getCastList(id)
 
         executeCall(call, listener)
     }
+
 
     fun getSimilarMovies(id: Int, listener: ApiListener<MoviesModel>) {
         val call = remote.getSimilarMovies(id)
