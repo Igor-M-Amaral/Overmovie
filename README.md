@@ -24,3 +24,7 @@
 ## 📷 Screenshot
 
 ![Screenshot](https://user-images.githubusercontent.com/58862763/189956580-5da57295-06c0-475e-88ac-9ec875dc45b3.jpg)
+
+
+## Permissions 💻
++ Internet
