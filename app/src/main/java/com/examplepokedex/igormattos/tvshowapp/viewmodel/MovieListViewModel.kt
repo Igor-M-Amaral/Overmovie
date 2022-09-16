@@ -6,26 +6,30 @@ import androidx.lifecycle.ViewModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiListener
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 
-class MainViewModel : ViewModel() {
+class MovieListViewModel(private val repository: MovieRepository) : ViewModel() {
 
     private var moviefilter = 0
 
-    private val _movies = MutableLiveData<MoviesModel>()
-    val movies: LiveData<MoviesModel> = _movies
+    private val _movies = MutableLiveData<List<MoviesResult>>()
+    val movies: LiveData<List<MoviesResult>> = _movies
 
     val nameTitle = MutableLiveData<String>()
 
+    val progressBar = MutableLiveData<Boolean>()
+
     val errorMessage = MutableLiveData<String>()
 
-    private val repository = MovieRepository()
 
     fun listMovie(filter: Int) {
+        progressBar.value = true
         moviefilter = filter
         val listener = object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
-                _movies.value = result
+                _movies.value = result.moviesResults
+                progressBar.value = false
             }
 
             override fun onFailure(message: String) {
@@ -56,7 +60,7 @@ class MainViewModel : ViewModel() {
     fun searchPostsTitleContains(searchString: String){
         val listener = object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
-                _movies.value = result
+                _movies.value = result.moviesResults
             }
 
             override fun onFailure(message: String) {

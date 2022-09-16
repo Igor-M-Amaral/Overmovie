@@ -1,5 +1,6 @@
 package com.examplepokedex.igormattos.tvshowapp.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.navController
         binding.buttonNavigationView.setupWithNavController(navController)
+
+        binding.fab.setOnClickListener {
+            startActivity(Intent(this, FavoritesActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

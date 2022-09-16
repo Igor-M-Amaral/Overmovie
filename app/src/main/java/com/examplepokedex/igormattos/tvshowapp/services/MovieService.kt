@@ -3,6 +3,7 @@ package com.examplepokedex.igormattos.tvshowapp.services
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -21,6 +22,9 @@ interface MovieService {
 
     @GET(Constants.URL.RATED + Constants.APIKEY.KEY)
     fun getRated(): Call<MoviesModel>
+
+    @GET(Constants.URL.DETAILS + Constants.APIKEY.KEY)
+    fun getMovieById(@Path(value = "movie_id", encoded = true) movie_id: Int) : Call<MoviesResult>
 
     @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     fun getCastList(@Path(value = "id", encoded = true) id: Int): Call<CastModel>

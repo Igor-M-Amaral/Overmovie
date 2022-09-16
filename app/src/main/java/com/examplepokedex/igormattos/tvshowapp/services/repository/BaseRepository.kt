@@ -18,7 +18,6 @@ open class BaseRepository {
             override fun onFailure(call: Call<T>, t: Throwable) {
                 listener.onFailure(t.message.toString())
             }
-
         })
     }
 }

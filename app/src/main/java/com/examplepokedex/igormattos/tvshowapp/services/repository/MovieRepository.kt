@@ -4,6 +4,10 @@ import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiL
 import com.examplepokedex.igormattos.tvshowapp.services.MovieService
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MovieRepository : BaseRepository() {
 
@@ -29,6 +33,12 @@ class MovieRepository : BaseRepository() {
 
     fun getCastList(id: Int, listener: ApiListener<CastModel>) {
         val call = remote.getCastList(id)
+
+        executeCall(call, listener)
+    }
+
+    fun getMovieById(id: Int, listener: ApiListener<MoviesResult>){
+        val call = remote.getMovieById(id)
 
         executeCall(call, listener)
     }

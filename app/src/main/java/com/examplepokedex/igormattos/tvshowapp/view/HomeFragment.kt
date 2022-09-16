@@ -3,10 +3,10 @@ package com.examplepokedex.igormattos.tvshowapp.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.R
@@ -14,15 +14,19 @@ import com.examplepokedex.igormattos.tvshowapp.databinding.HomeFragmentBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
-import com.examplepokedex.igormattos.tvshowapp.viewmodel.MainViewModel
+import com.examplepokedex.igormattos.tvshowapp.viewmodel.MovieListViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MovieListViewModel by viewModel()
     private lateinit var adapter: MovieAdapter
 
     private lateinit var searchView: SearchView
+    private val progressBar: ProgressBar by lazy {
+        binding.mainProgressbar
+    }
 
     private var movieFilter = 0
 
@@ -33,15 +37,21 @@ class HomeFragment : Fragment() {
     ): View? {
 
         binding = HomeFragmentBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         movieFilter = requireArguments().getInt(Constants.BUNDLE.MOVIEFILTER, 0)
 
         initSearchBar()
         observe()
 
+
+        viewModel.progressBar.observe(viewLifecycleOwner, Observer{
+            if(it) showProgressBar() else (hideProgressBar())
+
+        })
+
         return binding.root
     }
+
 
 
     override fun onResume() {
@@ -50,14 +60,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.movies.observe(viewLifecycleOwner, Observer {
+        viewModel.movies.observe(viewLifecycleOwner, Observer { listResult ->
             binding.recyclerView.layoutManager =
                 GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
-            adapter = MovieAdapter {
-                openOverView(it)
+            adapter = MovieAdapter { movieResult ->
+                openOverView(movieResult)
             }
             binding.recyclerView.adapter = adapter
-            adapter.setMovieList(it.moviesResults)
+            adapter.setMovieList(listResult)
         })
         viewModel.nameTitle.observe(viewLifecycleOwner, Observer {
             binding.homeToolbar.title = it
@@ -69,28 +79,20 @@ class HomeFragment : Fragment() {
 
             this.inflateMenu(R.menu.search_menu)
 
-            //Recupero o item do menu como searchView para dar acesso ao banco query
             val searchItem = menu.findItem(R.id.menu_search)
             searchView = searchItem.actionView as SearchView
 
-            //abra o campo de busca por padrao
             searchView.isIconified = false
-
-            //configura listener de mudança de texto
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    //extrai string de busca
                     val searchString = searchView.query.toString()
-                    //busca na api
                     viewModel.searchPostsTitleContains(searchString)
-                    //escondde o teclado
                     searchView.clearFocus()
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    //execute busca a cada modifição
                     newText?.let {
                         viewModel.searchPostsTitleContains(it)
                     }
@@ -103,13 +105,15 @@ class HomeFragment : Fragment() {
     private fun openOverView(moviesResult: MoviesResult) {
         val intent = Intent(activity, OverViewActivity::class.java)
         intent.putExtra("ID", moviesResult.id)
-        intent.putExtra("TITLE", moviesResult.title)
-        intent.putExtra("BACKDROP_PATH", moviesResult.backdrop_path)
-        intent.putExtra("DATE", moviesResult.release_date)
-        intent.putExtra("POPULARITY", moviesResult.popularity)
-        intent.putExtra("OVERVIEW", moviesResult.overview)
-        intent.putExtra("VOTE", moviesResult.vote_average)
         startActivity(intent)
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 
 }

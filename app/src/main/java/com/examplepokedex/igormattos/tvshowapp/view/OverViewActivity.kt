@@ -1,23 +1,28 @@
 package com.examplepokedex.igormattos.tvshowapp.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityOverViewBinding
+import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.castadapter.CastAdapter
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.OverViewViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class OverViewActivity : AppCompatActivity() {
+class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityOverViewBinding
-    private lateinit var viewModel: OverViewViewModel
+    private val viewModel: OverViewViewModel by viewModel()
     private lateinit var adapterSimilar: MovieAdapter
     private val adapterCast = CastAdapter()
 
@@ -27,17 +32,9 @@ class OverViewActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         binding = ActivityOverViewBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[OverViewViewModel::class.java]
 
-        intent.extras?.let {
-            viewModel.setBundle(it, binding.imgMovieLargePoster)
-            viewModel.getCastList(it.getInt("ID"))
-            viewModel.getSimilarMovies(it.getInt("ID"))
-        }
-
-        binding.buttonBack.setOnClickListener {
-            finish()
-        }
+        binding.fabPlayButton.setOnClickListener(this)
+        binding.buttonBack.setOnClickListener(this)
 
         observer()
 
@@ -45,28 +42,19 @@ class OverViewActivity : AppCompatActivity() {
     }
 
     private fun observer() {
-        viewModel.title.observe(this, Observer { title ->
-            binding.textTitle.text = title
-        })
-        viewModel.date.observe(this, Observer { date ->
-            binding.textReleaseDate.text = date
-        })
-        viewModel.popularity.observe(this, Observer { popularity ->
-            binding.textPopularity.text = popularity
-        })
-        viewModel.overview.observe(this, Observer { overview ->
-            binding.textOverview.text = overview
-        })
-        viewModel.vote.observe(this, Observer { vote ->
-            binding.textAverage.text = vote
-        })
+        val id = intent.extras!!.getInt("ID")
+
+        viewModel.getMovieById(id)
+        viewModel.getCastList(id)
+        viewModel.getSimilarMovies(id)
+
         viewModel.cast.observe(this, Observer {
             binding.recyclerView.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerView.adapter = adapterCast
             adapterCast.setCastList(it.cast)
         })
-        viewModel.movies.observe(this, Observer {
+        viewModel.similar.observe(this, Observer {
             binding.recyclerViewSimiliar.layoutManager =
                 GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
             adapterSimilar = MovieAdapter {
@@ -75,18 +63,57 @@ class OverViewActivity : AppCompatActivity() {
             binding.recyclerViewSimiliar.adapter = adapterSimilar
             adapterSimilar.setMovieList(it.moviesResults)
         })
+
+        viewModel.movieDetails.observe(this, Observer {
+            binding.apply {
+                textTitle.text = it.title
+                textReleaseDate.text = it.release_date
+                textOverview.text = it.overview
+                textAverage.text = it.vote_average.toString()
+                textPopularity.text = it.popularity.toString()
+
+                Glide.with(applicationContext)
+                    .load(Constants.URL.IMAGE_BASE + it.backdrop_path)
+                    .into(imgMovieLargePoster)
+
+            }
+            checkFavorite()
+        })
     }
 
     private fun openOverView(moviesResult: MoviesResult) {
         val intent = Intent(applicationContext, OverViewActivity::class.java)
         intent.putExtra("ID", moviesResult.id)
-        intent.putExtra("TITLE", moviesResult.title)
-        intent.putExtra("BACKDROP_PATH", moviesResult.backdrop_path)
-        intent.putExtra("DATE", moviesResult.release_date)
-        intent.putExtra("POPULARITY", moviesResult.popularity)
-        intent.putExtra("OVERVIEW", moviesResult.overview)
-        intent.putExtra("VOTE", moviesResult.vote_average)
         startActivity(intent)
+    }
+
+    private fun checkFavorite(){
+        viewModel.favorite.observe(this, Observer {
+            binding.apply {
+                if (it){
+                    fabPlayButton.setColorFilter(Color.RED)
+                } else{
+                    fabPlayButton.setColorFilter(Color.WHITE)
+
+                }
+            }
+        })
+        viewModel.checkFavorite()
 
     }
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.fabPlayButton -> {
+                viewModel.favoriteMovie()
+                viewModel.checkFavorite()
+            }
+
+            R.id.button_back -> {
+                finish()
+            }
+        }
+
+    }
+
 }

@@ -1,24 +1,20 @@
 package com.examplepokedex.igormattos.tvshowapp.viewmodel
 
-import android.app.Application
-import android.os.Bundle
-import android.widget.ImageView
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
+import androidx.lifecycle.ViewModel
 import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.ApiListener
-import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.CastModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MovieDB
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesModel
+import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
+import com.examplepokedex.igormattos.tvshowapp.services.repository.local.FavoriteDao
 
-class OverViewViewModel(application: Application) : AndroidViewModel(application) {
-
-
-    private val context = application.applicationContext
+class OverViewViewModel(private val favoriteDao: FavoriteDao) : ViewModel(){
 
     private val repository = MovieRepository()
+
 
     private val _cast = MutableLiveData<CastModel>()
     val cast: LiveData<CastModel> = _cast
@@ -26,32 +22,25 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
     private var _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
 
-    private var _date = MutableLiveData<String>()
-    val date: LiveData<String> = _date
+    private val _similar = MutableLiveData<MoviesModel>()
+    val similar: LiveData<MoviesModel> = _similar
 
-    private var _popularity = MutableLiveData<String>()
-    val popularity: LiveData<String> = _popularity
+    private val _movieDetails = MutableLiveData<MoviesResult>()
+    val movieDetails: LiveData<MoviesResult> = _movieDetails
 
-    private var _overview = MutableLiveData<String>()
-    val overview: LiveData<String> = _overview
+    var favorite = MutableLiveData(false)
 
-    private var _vote = MutableLiveData<String>()
-    val vote: LiveData<String> = _vote
+    fun getMovieById(id: Int){
+        repository.getMovieById(id, object : ApiListener<MoviesResult>{
+            override fun onSuccess(result: MoviesResult) {
+                _movieDetails.value = result
+            }
 
-    private val _movies = MutableLiveData<MoviesModel>()
-    val movies: LiveData<MoviesModel> = _movies
+            override fun onFailure(message: String) {
+                TODO("Not yet implemented")
+            }
 
-    fun setBundle(bundle: Bundle, imgMovieLargePoster: ImageView) {
-        Glide.with(context)
-            .load(Constants.URL.IMAGE_BASE + bundle.getString("BACKDROP_PATH"))
-            .into(imgMovieLargePoster)
-
-
-        _title.value = bundle.getString("TITLE")
-        _date.value = bundle.getString("DATE")
-        _popularity.value = bundle.getDouble("POPULARITY").toString()
-        _overview.value = bundle.getString("OVERVIEW")
-        _vote.value = bundle.getFloat("VOTE").toString()
+        })
     }
 
     fun getCastList(id: Int) {
@@ -66,10 +55,10 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
         })
     }
 
-    fun getSimilarMovies(id: Int){
+    fun getSimilarMovies(id: Int) {
         repository.getSimilarMovies(id, object : ApiListener<MoviesModel> {
             override fun onSuccess(result: MoviesModel) {
-                _movies.value = result
+                _similar.value = result
             }
 
             override fun onFailure(message: String) {
@@ -79,4 +68,20 @@ class OverViewViewModel(application: Application) : AndroidViewModel(application
         })
     }
 
+    fun favoriteMovie(){
+        movieDetails.value!!.apply {
+            val movieDB = MovieDB(id, poster_path, overview, title, backdrop_path)
+
+            if (favorite.value == true){
+                favoriteDao.removeMovie(movieDB)
+            }else{
+                favoriteDao.save(movieDB)
+            }
+        }
+    }
+
+    fun checkFavorite(){
+        val response = favoriteDao.favoriteExist(movieDetails.value!!.id)
+        favorite.postValue(response)
+    }
 }

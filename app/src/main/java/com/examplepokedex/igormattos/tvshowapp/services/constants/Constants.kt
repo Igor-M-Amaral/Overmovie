@@ -8,6 +8,7 @@ class Constants private constructor(){
         const val UPCOMING_POINT = "/3/movie/upcoming?api_key="
         const val CAST = "/3/movie/{id}/credits?api_key="
         const val SIMILAR = "/3/movie/{id}/similar?api_key="
+        const val DETAILS = "/3/movie/{movie_id}?api_key="
         const val SEARCH = "/3/search/movie?api_key="
         const val TRENDING = "/3/trending/movie/day?api_key="
         const val RATED = "/3/movie/top_rated?api_key="
@@ -29,5 +30,8 @@ class Constants private constructor(){
         const val RATED = 3
     }
 
+    object TABLE{
+        const val NAME = "FAVORITE"
+    }
 }
 
