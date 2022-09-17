@@ -12,7 +12,9 @@ import com.bumptech.glide.Glide
 import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.ActivityOverViewBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
+import com.examplepokedex.igormattos.tvshowapp.services.model.MovieDB
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.MovieListener
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.castadapter.CastAdapter
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.OverViewViewModel
@@ -23,7 +25,7 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityOverViewBinding
     private val viewModel: OverViewViewModel by viewModel()
-    private lateinit var adapterSimilar: MovieAdapter
+    private  val adapterSimilar = MovieAdapter()
     private val adapterCast = CastAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,21 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.fabPlayButton.setOnClickListener(this)
         binding.buttonBack.setOnClickListener(this)
+
+        val listener = object : MovieListener {
+            override fun onDeleteById(movie: MovieDB) {
+            }
+
+            override fun onListClick(id: Int) {
+                val intent = Intent(applicationContext, OverViewActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt("ID", id)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        }
+
+        adapterSimilar.attachListener(listener)
 
         observer()
 
@@ -54,14 +71,12 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
             binding.recyclerView.adapter = adapterCast
             adapterCast.setCastList(it.cast)
         })
+
         viewModel.similar.observe(this, Observer {
             binding.recyclerViewSimiliar.layoutManager =
                 GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
-            adapterSimilar = MovieAdapter {
-                openOverView(it)
-            }
             binding.recyclerViewSimiliar.adapter = adapterSimilar
-            adapterSimilar.setMovieList(it.moviesResults)
+            adapterSimilar.submitList(it.moviesResults)
         })
 
         viewModel.movieDetails.observe(this, Observer {
@@ -69,8 +84,8 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
                 textTitle.text = it.title
                 textReleaseDate.text = it.release_date
                 textOverview.text = it.overview
-                textAverage.text = it.vote_average.toString()
-                textPopularity.text = it.popularity.toString()
+                textAverage.text = String.format("%.1f", it.vote_average)
+                textPopularity.text = String.format("%.0f", it.popularity)
 
                 Glide.with(applicationContext)
                     .load(Constants.URL.IMAGE_BASE + it.backdrop_path)
@@ -81,11 +96,6 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    private fun openOverView(moviesResult: MoviesResult) {
-        val intent = Intent(applicationContext, OverViewActivity::class.java)
-        intent.putExtra("ID", moviesResult.id)
-        startActivity(intent)
-    }
 
     private fun checkFavorite(){
         viewModel.favorite.observe(this, Observer {

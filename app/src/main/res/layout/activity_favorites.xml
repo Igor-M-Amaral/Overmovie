@@ -21,14 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/home_toolbar"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="60dp"
         android:scrollbars="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3"
-        tools:listitem="@layout/row_movies" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_favorites" />
 
     <ProgressBar
         android:id="@+id/main_progressbar"

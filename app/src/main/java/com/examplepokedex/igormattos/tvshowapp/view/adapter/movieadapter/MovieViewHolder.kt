@@ -7,29 +7,31 @@ import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.RowMoviesBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.MovieListener
 
 
-class MovieViewHolder(private val binding: RowMoviesBinding) : RecyclerView.ViewHolder(binding.root) {
+class MovieViewHolder(private val binding: RowMoviesBinding, private val listener: MovieListener) : RecyclerView.ViewHolder(binding.root) {
 
     private var movieTitle = binding.textTitle
     private val date = binding.textReleaseDate
 
-    fun bind(moviesResult: MoviesResult, onItemClicked: (MoviesResult) -> Unit) {
+    fun bind(moviesResult: MoviesResult) {
 
         movieTitle.text = moviesResult.title
         date.text = moviesResult.release_date
 
-        val resquestOption = RequestOptions()
+        val requestOption = RequestOptions()
             .placeholder(R.drawable.poster_placeholder)
             .error(R.drawable.person_placeholder)
 
         Glide.with(itemView.context)
-            .applyDefaultRequestOptions(resquestOption)
+            .applyDefaultRequestOptions(requestOption)
             .load(Constants.URL.IMAGE_BASE + moviesResult.poster_path)
             .into(binding.imgMoviePoster)
 
-        itemView.setOnClickListener {
-            onItemClicked(moviesResult)
+        binding.imgMoviePoster.setOnClickListener {
+            listener.onListClick(moviesResult.id)
         }
+
     }
 }

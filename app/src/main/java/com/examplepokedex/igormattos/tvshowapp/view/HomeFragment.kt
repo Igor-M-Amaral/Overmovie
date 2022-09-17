@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.examplepokedex.igormattos.tvshowapp.R
 import com.examplepokedex.igormattos.tvshowapp.databinding.HomeFragmentBinding
 import com.examplepokedex.igormattos.tvshowapp.services.constants.Constants
+import com.examplepokedex.igormattos.tvshowapp.services.model.MovieDB
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.MovieListener
 import com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter.MovieAdapter
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MovieListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
     private val viewModel: MovieListViewModel by viewModel()
-    private lateinit var adapter: MovieAdapter
+    private var adapter = MovieAdapter()
 
     private lateinit var searchView: SearchView
     private val progressBar: ProgressBar by lazy {
@@ -43,15 +45,28 @@ class HomeFragment : Fragment() {
         initSearchBar()
         observe()
 
-
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer{
-            if(it) showProgressBar() else (hideProgressBar())
+        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
+            if (it) showProgressBar() else (hideProgressBar())
 
         })
 
+        val listener = object : MovieListener {
+            override fun onDeleteById(movie: MovieDB) {
+            }
+
+            override fun onListClick(id: Int) {
+                val intent = Intent(activity, OverViewActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt("ID", id)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        }
+
+        adapter.attachListener(listener)
+
         return binding.root
     }
-
 
 
     override fun onResume() {
@@ -63,19 +78,16 @@ class HomeFragment : Fragment() {
         viewModel.movies.observe(viewLifecycleOwner, Observer { listResult ->
             binding.recyclerView.layoutManager =
                 GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
-            adapter = MovieAdapter { movieResult ->
-                openOverView(movieResult)
-            }
             binding.recyclerView.adapter = adapter
-            adapter.setMovieList(listResult)
+            adapter.submitList(listResult)
         })
         viewModel.nameTitle.observe(viewLifecycleOwner, Observer {
             binding.homeToolbar.title = it
         })
     }
 
-    private fun initSearchBar(){
-        with(binding.homeToolbar){
+    private fun initSearchBar() {
+        with(binding.homeToolbar) {
 
             this.inflateMenu(R.menu.search_menu)
 
@@ -84,7 +96,7 @@ class HomeFragment : Fragment() {
 
             searchView.isIconified = false
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     val searchString = searchView.query.toString()
                     viewModel.searchPostsTitleContains(searchString)
@@ -102,11 +114,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun openOverView(moviesResult: MoviesResult) {
-        val intent = Intent(activity, OverViewActivity::class.java)
-        intent.putExtra("ID", moviesResult.id)
-        startActivity(intent)
-    }
 
     private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE

@@ -3,25 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/drawable/ic_back.xml" value="0.286" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/drawable/rounded_corner.xml" value="0.1" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/drawable/splash_image.xml" value="0.1" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_favorites.xml" value="0.32592592592592595" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_navigation_view.xml" value="0.325" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_over_view.xml" value="0.33" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.2737752161383285" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_test.xml" value="0.319634703196347" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/app_bar_main.xml" value="0.2935185185185185" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/content_main.xml" value="0.32407407407407407" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/fragment_movies.xml" value="0.32592592592592595" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/home_fragment.xml" value="0.33" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/nav_header_main.xml" value="0.3282407407407407" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/row_cast.xml" value="0.696969696969697" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/row_list.xml" value="0.25" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/row_movies.xml" value="0.33" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/menu/activity_main_menu.xml" value="0.325" />
-        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/menu/search_menu.xml" value="0.32916666666666666" />
+        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_favorites.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/activity_over_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/row_cast.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Igor/Desktop/TvShowApp/app/src/main/res/layout/row_favorites.xml" value="0.6511919698870765" />
       </map>
     </option>
   </component>

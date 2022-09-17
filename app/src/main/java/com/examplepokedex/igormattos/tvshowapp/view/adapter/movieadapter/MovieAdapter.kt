@@ -2,29 +2,37 @@ package com.examplepokedex.igormattos.tvshowapp.view.adapter.movieadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.examplepokedex.igormattos.tvshowapp.databinding.RowMoviesBinding
 import com.examplepokedex.igormattos.tvshowapp.services.model.MoviesResult
+import com.examplepokedex.igormattos.tvshowapp.services.repository.listener.MovieListener
 
-class MovieAdapter(private val onItemClicked: (MoviesResult) -> Unit): RecyclerView.Adapter<MovieViewHolder>() {
+class MovieAdapter: ListAdapter<MoviesResult, MovieViewHolder>(MoviesResultCallBack()) {
 
-    private var moviesList = mutableListOf<MoviesResult>()
+    private lateinit var listener: MovieListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(RowMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return MovieViewHolder(RowMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false), listener)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = moviesList[position]
-        holder.bind(movie, onItemClicked)
+        val movie = getItem(position)
+        holder.bind(movie)
     }
 
-    override fun getItemCount(): Int {
-        return moviesList.size
+    fun attachListener(movieListener: MovieListener) {
+        listener = movieListener
     }
 
-    fun setMovieList(movie: List<MoviesResult>){
-        this.moviesList = movie.toMutableList()
-    }
+    class MoviesResultCallBack : DiffUtil.ItemCallback<MoviesResult>() {
+        override fun areItemsTheSame(oldItem: MoviesResult, newItem: MoviesResult): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: MoviesResult, newItem: MoviesResult): Boolean {
+            return oldItem.title == newItem.title
+        }
+
+    }
 }

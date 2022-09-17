@@ -2,6 +2,7 @@ package com.examplepokedex.igormattos.tvshowapp.di
 
 import com.examplepokedex.igormattos.tvshowapp.services.repository.MovieRepository
 import com.examplepokedex.igormattos.tvshowapp.services.repository.local.FavoriteDatabase
+import com.examplepokedex.igormattos.tvshowapp.viewmodel.FavoritesViewModel
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.MovieListViewModel
 import com.examplepokedex.igormattos.tvshowapp.viewmodel.OverViewViewModel
 import org.koin.android.ext.koin.androidContext
@@ -15,6 +16,10 @@ val viewModelModule = module {
 
 val overViewModule = module {
     viewModel { OverViewViewModel(get()) }
+}
+
+val favoriteViewModule = module {
+    viewModel { FavoritesViewModel(get()) }
 }
 
 val repositoryModule = module {

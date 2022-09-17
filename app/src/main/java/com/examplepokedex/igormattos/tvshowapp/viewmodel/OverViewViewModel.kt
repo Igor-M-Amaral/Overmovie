@@ -68,9 +68,10 @@ class OverViewViewModel(private val favoriteDao: FavoriteDao) : ViewModel(){
         })
     }
 
+
     fun favoriteMovie(){
         movieDetails.value!!.apply {
-            val movieDB = MovieDB(id, poster_path, overview, title, backdrop_path)
+            val movieDB = MovieDB(id, poster_path, vote_average, title, backdrop_path)
 
             if (favorite.value == true){
                 favoriteDao.removeMovie(movieDB)

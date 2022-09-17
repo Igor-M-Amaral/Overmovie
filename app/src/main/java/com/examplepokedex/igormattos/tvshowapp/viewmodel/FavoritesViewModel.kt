@@ -1,21 +1,27 @@
 package com.examplepokedex.igormattos.tvshowapp.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.examplepokedex.igormattos.tvshowapp.services.model.MovieDB
-import com.examplepokedex.igormattos.tvshowapp.services.repository.local.FavoriteDatabase
+import com.examplepokedex.igormattos.tvshowapp.services.repository.local.FavoriteDao
 
-class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
+class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
 
     private val _movies = MutableLiveData<List<MovieDB>>()
     val movies: LiveData<List<MovieDB>> = _movies
 
-    private val databaseDao = FavoriteDatabase.getDataBase(application.applicationContext).getFavoriteDao()
+    val progressBar = MutableLiveData<Boolean>()
+
 
     fun listFavorites(){
-        _movies.value = databaseDao.getAllFavorites()
+        progressBar.value = true
+        _movies.value = favoriteDao.getAllFavorites()
+        progressBar.value = false
+    }
+
+    fun deleteFavorite(id: MovieDB) {
+        favoriteDao.removeMovie(id)
     }
 
 }
