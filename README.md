@@ -27,7 +27,7 @@
 ## 📷 Screenshot
 
 ![ScreenShotReadme](https://user-images.githubusercontent.com/58862763/190878296-fe2d7955-0453-40f1-a56c-00494f731d45.jpg)
-)
+
 
 
 ## Permissions 💻
