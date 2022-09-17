@@ -17,7 +17,9 @@
   * LiveData -  Data objects that notify views when the underlying database changes.
   * ViewModel - Stores UI-related data that isn't destroyed on UI changes.
   * ViewBinding - Generates a binding class for each XML layout file present in that module and allows you to more easily write code that interacts with views.
- 
+  * Room - SQLite object mapping library.
+  * Koin - Dependency Injection Framework
+  
 * Navigation Graph - The Navigation component uses a navigation graph to manage your app's navigation.
 * Retrofit - A type-safe HTTP client for Android and Java.
 
