@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_upcoming"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/nav_popular"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/nav_trending"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
@@ -40,7 +40,7 @@
 
     <fragment
         android:id="@+id/nav_rated"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/nav_favorites"
-        android:name="com.examplepokedex.igormattos.tvshowapp.view.HomeFragment"
+        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument

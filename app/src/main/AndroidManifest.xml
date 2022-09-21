@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AppApplication"
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,10 +17,10 @@
         android:theme="@style/Theme.TvShowApp"
         tools:targetApi="31">
         <activity
-            android:name=".view.FavoritesActivity"
+            android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.FavoritesActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SplashScreenActivity"
+            android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.OverViewActivity"
+            android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.OverViewActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.MainActivity"
             android:exported="true" />
     </application>
 
