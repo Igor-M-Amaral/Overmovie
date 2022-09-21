@@ -7,58 +7,48 @@
 
     <fragment
         android:id="@+id/nav_upcoming"
-        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
+        android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="integer"
-            android:defaultValue="0"/>
+            app:argType="string"
+            android:defaultValue="upcoming"/>
     </fragment>
 
     <fragment
         android:id="@+id/nav_popular"
-        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
+        android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="integer"
-            android:defaultValue="1"/>
+            app:argType="string"
+            android:defaultValue="popular"/>
     </fragment>
 
     <fragment
         android:id="@+id/nav_trending"
-        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
+        android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="integer"
-            android:defaultValue="2"/>
+            app:argType="string"
+            android:defaultValue="trending"/>
     </fragment>
 
     <fragment
         android:id="@+id/nav_rated"
-        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
+        android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="integer"
-            android:defaultValue="3"/>
+            app:argType="string"
+            android:defaultValue="top_rated"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_favorites"
-        android:name="com.examplepokedex.igormattos.tvshowapp.ui.view.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
-        <argument
-            android:name="moviefilter"
-            app:argType="integer"
-            android:defaultValue="4"/>
-    </fragment>
 
 
 </navigation>

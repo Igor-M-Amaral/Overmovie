@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">OverMovie</string>
     <string name="Description">Movie Description</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="popular">Popular</string>
+    <string name="trending">Trending</string>
+    <string name="top_rated">Top rated</string>
 </resources>
