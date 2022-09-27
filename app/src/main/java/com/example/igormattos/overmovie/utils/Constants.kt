@@ -14,7 +14,7 @@ class Constants private constructor(){
         const val IMAGE_BASE = "https://image.tmdb.org/t/p/w500/"
     }
     object APIKEY{
-        const val KEY = "38e916798d955f2ece239fec2cb84d59"
+        const val KEY = "PUT YOUR API KEY HERE"
     }
 
     object BUNDLE {
