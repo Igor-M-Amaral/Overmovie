@@ -28,7 +28,8 @@
 
 ![ScreenShotReadme](https://user-images.githubusercontent.com/58862763/190878296-fe2d7955-0453-40f1-a56c-00494f731d45.jpg)
 
-
+## ⚠️ Setup Requirements
+Obtain your key from [TMDB](https://www.themoviedb.org/documentation/api) API and replace it in the const val KEY = "PUT YOUR API KEY HERE":
 
 ## Permissions 💻
 + Internet
