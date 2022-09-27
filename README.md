@@ -21,6 +21,8 @@
  
  * [Koin](https://insert-koin.io/) - Dependency Injection Framework
   
+ * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - A concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
+  
 * [Navigation Graph](https://developer.android.com/guide/navigation/navigation-design-graph) - The Navigation component uses a navigation graph to manage your app's navigation.
 * [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
 
