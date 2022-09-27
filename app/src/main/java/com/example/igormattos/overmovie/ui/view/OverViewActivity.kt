@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,8 +26,11 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityOverViewBinding
     private val viewModel: OverViewViewModel by viewModel()
-    private  val adapterSimilar = MovieAdapter()
+    private val adapterSimilar = MovieAdapter()
     private val adapterCast = CastAdapter()
+    private val progressBar: ProgressBar by lazy {
+        binding.progressbar
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +54,31 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+        viewModel.progressBar.observe(this, Observer {
+            if (it) showProgressBar() else (hideProgressBar())
+
+        })
 
         adapterSimilar.attachListener(listener)
+
 
         observer()
 
         setContentView(binding.root)
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.fabPlayButton -> {
+                viewModel.favoriteMovie()
+                viewModel.checkFavorite()
+            }
+
+            R.id.button_back -> {
+                finish()
+            }
+        }
+
     }
 
     private fun observer() {
@@ -74,7 +97,7 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
         viewModel.similar.observe(this, Observer {
             binding.recyclerViewSimiliar.layoutManager =
-                GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
+                GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false)
             binding.recyclerViewSimiliar.adapter = adapterSimilar
             adapterSimilar.submitList(it.moviesResults)
         })
@@ -90,7 +113,6 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
                 Glide.with(applicationContext)
                     .load(Constants.URL.IMAGE_BASE + it.backdrop_path)
                     .into(imgMovieLargePoster)
-
             }
             checkFavorite()
         })
@@ -100,15 +122,13 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-
-    private fun checkFavorite(){
+    private fun checkFavorite() {
         viewModel.favorite.observe(this, Observer {
             binding.apply {
-                if (it){
+                if (it) {
                     fabPlayButton.setColorFilter(Color.RED)
-                } else{
+                } else {
                     fabPlayButton.setColorFilter(Color.WHITE)
-
                 }
             }
         })
@@ -116,18 +136,11 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    override fun onClick(v: View) {
-        when(v.id){
-            R.id.fabPlayButton -> {
-                viewModel.favoriteMovie()
-                viewModel.checkFavorite()
-            }
-
-            R.id.button_back -> {
-                finish()
-            }
-        }
-
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
     }
 
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
 }

@@ -3,12 +3,13 @@ package com.example.igormattos.overmovie.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.utils.listener.ApiListener
+import androidx.lifecycle.viewModelScope
 import com.example.igormattos.overmovie.utils.Constants
-import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.data.repository.MovieRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 class MovieListViewModel(private val repository: MovieRepository) : ViewModel() {
 
@@ -27,47 +28,36 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
     fun listMovie(filter: String) {
         progressBar.value = true
         moviefilter = filter
-        val listener = object : ApiListener<MoviesModel> {
-            override fun onSuccess(result: MoviesModel) {
-                _movies.value = result.moviesResults
-                progressBar.value = false
-            }
 
-            override fun onFailure(message: String) {
-                errorMessage.postValue(message)
-            }
-        }
-
-        when (filter) {
-            Constants.FILTER.UPCOMING -> {
-                repository.getMovieList(listener, filter)
-                nameTitle.value = "Upcoming"
-            }
-            Constants.FILTER.POPULAR -> {
-                repository.getMovieList(listener, filter)
-                nameTitle.value = "Popular"
-            }
-            Constants.FILTER.TRENDING -> {
-                repository.getTrendingMovies(listener)
-                nameTitle.value = "Trending"
-            }
-            Constants.FILTER.RATED -> {
-                repository.getMovieList(listener, filter)
-                nameTitle.value = "Top rated"
+        viewModelScope.launch {
+            try {
+                if (filter == Constants.FILTER.TRENDING) {
+                    val result = repository.getTrendingMovies()
+                    if (result != null) {
+                        _movies.postValue(result.moviesResults)
+                        nameTitle.value = filter.uppercase()
+                        progressBar.value = false
+                    }
+                } else {
+                    val result = repository.getMovieList(filter)
+                    if (result != null) {
+                        _movies.postValue(result.moviesResults)
+                        progressBar.value = false
+                        nameTitle.value = filter.uppercase()
+                    }
+                }
+            } catch (e: Exception) {
+                errorMessage.value = "Something went wrong!"
             }
         }
     }
 
     fun searchPostsTitleContains(searchString: String) {
-        val listener = object : ApiListener<MoviesModel> {
-            override fun onSuccess(result: MoviesModel) {
-                _movies.value = result.moviesResults
-            }
-
-            override fun onFailure(message: String) {
-                errorMessage.postValue(message)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = repository.getSearch(searchString)
+                _movies.postValue(result!!.moviesResults)
+            }catch (e: NullPointerException) { }
         }
-        repository.getSearch(searchString, listener)
     }
 }

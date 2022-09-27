@@ -3,19 +3,24 @@ package com.example.igormattos.overmovie.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.igormattos.overmovie.utils.listener.ApiListener
+import androidx.lifecycle.viewModelScope
 import com.example.igormattos.overmovie.data.model.CastModel
 import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.data.repository.MovieRepository
 import com.example.igormattos.overmovie.data.local.FavoriteDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class OverViewViewModel(private val favoriteDao: FavoriteDao, private val repository: MovieRepository) : ViewModel(){
+class OverViewViewModel(
+    private val favoriteDao: FavoriteDao,
+    private val repository: MovieRepository
+) : ViewModel() {
 
 
     private val _cast = MutableLiveData<CastModel>()
-    val cast: LiveData<CastModel> = _cast
+    val cast: MutableLiveData<CastModel> = _cast
 
     private var _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
@@ -24,65 +29,55 @@ class OverViewViewModel(private val favoriteDao: FavoriteDao, private val reposi
     val similar: LiveData<MoviesModel> = _similar
 
     private val _movieDetails = MutableLiveData<MoviesResult>()
-    val movieDetails: LiveData<MoviesResult> = _movieDetails
+    val movieDetails: MutableLiveData<MoviesResult> = _movieDetails
 
     val errorMessage = MutableLiveData<String>()
 
+    val progressBar = MutableLiveData<Boolean>()
+
     var favorite = MutableLiveData(false)
 
-    fun getMovieById(id: Int){
-        repository.getMovieById(id, object : ApiListener<MoviesResult> {
-            override fun onSuccess(result: MoviesResult) {
-                _movieDetails.value = result
-            }
-
-            override fun onFailure(message: String) {
-                errorMessage.value = message
-            }
-
-        })
+    fun getMovieById(id: Int) {
+        viewModelScope.launch {
+            val result = repository.getMovieById(id)
+            _movieDetails.postValue(result!!)
+        }
     }
 
     fun getCastList(id: Int) {
-        repository.getCastList(id, object : ApiListener<CastModel> {
-            override fun onSuccess(result: CastModel) {
-                _cast.value = result
-            }
-
-            override fun onFailure(message: String) {
-                errorMessage.value = message
-            }
-        })
+        progressBar.value = true
+        viewModelScope.launch{
+            val result = repository.getCastList(id)
+            _cast.postValue(result!!)
+            progressBar.value = false
+        }
     }
 
     fun getSimilarMovies(id: Int) {
-        repository.getSimilarMovies(id, object : ApiListener<MoviesModel> {
-            override fun onSuccess(result: MoviesModel) {
-                _similar.value = result
-            }
-
-            override fun onFailure(message: String) {
-                errorMessage.value = message
-            }
-
-        })
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getSimilarMovies(id)
+            _similar.postValue(result!!)
+        }
     }
 
 
-    fun favoriteMovie(){
-        movieDetails.value!!.apply {
-            val movieDB = MovieDB(id, poster_path, vote_average, title, backdrop_path)
-
-            if (favorite.value == true){
-                favoriteDao.removeMovie(movieDB)
-            }else{
-                favoriteDao.save(movieDB)
+    fun favoriteMovie() {
+        viewModelScope.launch(Dispatchers.IO) {
+            movieDetails.value!!.apply {
+                val movieDB = MovieDB(id, poster_path, vote_average, title, backdrop_path)
+                if (favorite.value == true) {
+                    favoriteDao.removeMovie(movieDB)
+                } else {
+                    favoriteDao.save(movieDB)
+                }
             }
         }
     }
 
-    fun checkFavorite(){
-        val response = favoriteDao.favoriteExist(movieDetails.value!!.id)
-        favorite.postValue(response)
+    fun checkFavorite() {
+        viewModelScope.launch(Dispatchers.IO){
+            val response = favoriteDao.favoriteExist(movieDetails.value!!.id)
+            favorite.postValue(response)
+        }
     }
 }

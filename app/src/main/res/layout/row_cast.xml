@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@drawable/cast_photo"
+                tools:src="@drawable/cast_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,9:16" />
 

@@ -8,17 +8,17 @@ import com.example.igormattos.overmovie.data.model.MovieDB
 interface FavoriteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(movie: MovieDB)
+    suspend fun save(movie: MovieDB)
 
     @Delete
-    fun removeMovie(movie: MovieDB)
+    suspend fun removeMovie(movie: MovieDB)
 
     @Query("Delete from ${Constants.TABLE.NAME} where id=:id")
-    fun deleteMovieById(id: Int)
+    suspend fun deleteMovieById(id: Int)
 
     @Query("Select * from ${Constants.TABLE.NAME}")
-    fun getAllFavorites() : List<MovieDB>
+    suspend fun getAllFavorites(): List<MovieDB>
 
     @Query("SELECT EXISTS (SELECT 1 FROM ${Constants.TABLE.NAME} WHERE id = :id)")
-    fun favoriteExist(id: Int): Boolean
+    suspend fun favoriteExist(id: Int): Boolean
 }

@@ -2,7 +2,7 @@ package com.example.igormattos.overmovie
 
 import android.app.Application
 import com.example.igormattos.overmovie.data.di.*
-import com.example.igormattos.overmovie.ui.PresentationModule
+import com.example.igormattos.overmovie.ui.di.PresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

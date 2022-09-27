@@ -68,7 +68,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onResume() {
         super.onResume()
         viewModel.listMovie(movieFilter)
@@ -93,7 +92,6 @@ class HomeFragment : Fragment() {
 
     private fun initSearchBar() {
         with(binding.homeToolbar) {
-
             this.inflateMenu(R.menu.search_menu)
 
             val searchItem = menu.findItem(R.id.menu_search)
@@ -118,7 +116,6 @@ class HomeFragment : Fragment() {
             })
         }
     }
-
 
     private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE

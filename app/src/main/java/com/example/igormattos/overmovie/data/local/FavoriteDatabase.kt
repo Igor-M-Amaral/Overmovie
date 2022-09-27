@@ -21,8 +21,8 @@ abstract class FavoriteDatabase : RoomDatabase(){
         fun getDataBase(context: Context): FavoriteDatabase {
             if (!Companion::INSTANCE.isInitialized){
                 synchronized(FavoriteDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context, FavoriteDatabase::class.java, "favoriteDB")
-                        .allowMainThreadQueries()
+                    INSTANCE = Room.databaseBuilder(context, FavoriteDatabase::class.java,
+                        "favoriteDB")
                         .build()
                 }
             }

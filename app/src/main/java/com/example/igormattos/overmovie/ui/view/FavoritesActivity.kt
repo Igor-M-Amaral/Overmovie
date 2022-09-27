@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.databinding.ActivityFavoritesBinding
@@ -14,7 +15,7 @@ import com.example.igormattos.overmovie.ui.adapter.favoriteadapter.FavoriteAdapt
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesActivity : AppCompatActivity() {
+class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityFavoritesBinding
     private val viewModel: FavoritesViewModel by viewModel()
@@ -36,8 +37,6 @@ class FavoritesActivity : AppCompatActivity() {
             if(it) showProgressBar() else (hideProgressBar())
 
         })
-
-
         val listener = object : MovieListener {
             override fun onDeleteById(movie: MovieDB) {
                 viewModel.deleteFavorite(movie)
@@ -52,10 +51,9 @@ class FavoritesActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
         adapter.attachListener(listener)
 
-
+        binding.homeToolbar.setOnClickListener(this)
 
         observer()
 
@@ -83,6 +81,10 @@ class FavoritesActivity : AppCompatActivity() {
 
     private fun hideProgressBar() {
         progressBar.visibility = View.GONE
+    }
+
+    override fun onClick(v: View) {
+        finish()
     }
 
 }

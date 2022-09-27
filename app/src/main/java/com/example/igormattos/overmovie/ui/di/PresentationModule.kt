@@ -1,4 +1,4 @@
-package com.example.igormattos.overmovie.ui
+package com.example.igormattos.overmovie.ui.di
 
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
@@ -39,8 +39,4 @@ object PresentationModule {
             single { FavoriteDatabase.getDataBase(androidContext()).getFavoriteDao() }
         }
     }
-
-//    val daoModule = module {
-//        single { FavoriteDatabase.getDataBase(androidContext()).getFavoriteDao() }
-//    }
 }

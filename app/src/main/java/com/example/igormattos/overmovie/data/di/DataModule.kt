@@ -52,15 +52,4 @@ object DataModule {
 
         }
     }
-
-//    private inline fun <reified T>createService(factory: Moshi, client: OkHttpClient): T {
-//
-//        return Retrofit.Builder()
-//            .baseUrl(Constants.URL.BASE_URL)
-//            .addConverterFactory(MoshiConverterFactory.create(factory))
-//            .client(client)
-//            .build()
-//            .create(T::class.java)
-//
-//    }
 }
