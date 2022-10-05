@@ -1,4 +1,4 @@
-package com.example.igormattos.overmovie.ui.paging
+package com.example.igormattos.overmovie.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -8,7 +8,8 @@ import java.lang.Exception
 
 private const val DEFAULT_PAGE = 1
 
-class PopularPagingSource(private val service: MovieService, private val filter: String) : PagingSource<Int, MoviesResult>() {
+class SimilarPagingSource(private val service: MovieService, private val id: Int) :
+    PagingSource<Int, MoviesResult>() {
     override fun getRefreshKey(state: PagingState<Int, MoviesResult>): Int? {
         return null
     }
@@ -17,7 +18,7 @@ class PopularPagingSource(private val service: MovieService, private val filter:
 
         return try {
             val currentPage = params.key ?: DEFAULT_PAGE
-            val response = service.getMovieList(filter, currentPage)
+            val response = service.getSimilarMovies(id, currentPage)
             val responseData = mutableListOf<MoviesResult>()
             val data = response.body()?.moviesResults ?: emptyList()
             responseData.addAll(data)

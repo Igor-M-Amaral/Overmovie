@@ -25,8 +25,8 @@ class OverViewViewModel(
     private var _title = MutableLiveData<String>()
     val title: LiveData<String> = _title
 
-    private val _similar = MutableLiveData<MoviesModel>()
-    val similar: LiveData<MoviesModel> = _similar
+    private val _similar = MutableLiveData<List<MoviesResult>>()
+    val similar: LiveData<List<MoviesResult>> = _similar
 
     private val _movieDetails = MutableLiveData<MoviesResult>()
     val movieDetails: MutableLiveData<MoviesResult> = _movieDetails
@@ -56,7 +56,7 @@ class OverViewViewModel(
     fun getSimilarMovies(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getSimilarMovies(id)
-            _similar.postValue(result!!)
+            _similar.postValue(result?.moviesResults)
         }
     }
 

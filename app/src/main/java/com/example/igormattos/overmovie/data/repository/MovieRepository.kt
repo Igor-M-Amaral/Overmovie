@@ -1,20 +1,23 @@
 package com.example.igormattos.overmovie.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.igormattos.overmovie.data.api.MovieService
 import com.example.igormattos.overmovie.data.model.CastModel
 import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
+import com.example.igormattos.overmovie.data.paging.PopularPagingSource
+import kotlinx.coroutines.flow.Flow
 
 
 class MovieRepository(private val service: MovieService)  {
 
-    suspend fun getMovieList(filter: String): MoviesModel? {
-        val request = service.getMovieList(filter)
-
-        if (request.isSuccessful) {
-            return request.body()!!
-        }
-        return null
+    fun getMovieList(filter: String): Flow<PagingData<MoviesResult>> {
+        val request = Pager(PagingConfig(pageSize = 1)){
+            PopularPagingSource(service, filter)
+        }.flow
+        return request
     }
 
     suspend fun getCastList(id: Int): CastModel? {

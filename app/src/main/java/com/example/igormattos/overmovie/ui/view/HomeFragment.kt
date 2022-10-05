@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.R
@@ -17,6 +18,8 @@ import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.MovieAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -30,7 +33,7 @@ class HomeFragment : Fragment() {
         binding.mainProgressbar
     }
 
-    private var movieFilter = R.string.popular.toString()
+    private var movieFilter = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,10 +78,14 @@ class HomeFragment : Fragment() {
 
     private fun observe() {
         viewModel.movies.observe(viewLifecycleOwner, Observer { listResult ->
-            binding.recyclerView.layoutManager =
-                GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
-            binding.recyclerView.adapter = adapter
-            adapter.submitList(listResult)
+            lifecycleScope.launch {
+                binding.recyclerView.layoutManager =
+                    GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerView.adapter = adapter
+                listResult.collect{
+                    adapter.submitData(it)
+                }
+            }
         })
 
         viewModel.nameTitle.observe(viewLifecycleOwner, Observer {

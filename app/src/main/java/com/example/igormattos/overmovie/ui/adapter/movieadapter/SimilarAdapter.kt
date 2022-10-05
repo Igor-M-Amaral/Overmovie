@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.igormattos.overmovie.databinding.RowMoviesBinding
 import com.example.igormattos.overmovie.data.model.MoviesResult
+import com.example.igormattos.overmovie.databinding.RowMoviesBinding
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 
-class MovieAdapter: PagingDataAdapter<MoviesResult, MovieViewHolder>(MoviesResultCallBack()) {
+class SimilarAdapter: ListAdapter<MoviesResult, MovieViewHolder>(MoviesResultCallBack()) {
 
     private lateinit var listener: MovieListener
 

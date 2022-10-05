@@ -22,13 +22,21 @@ interface MovieService {
     suspend fun getTrendingMovies(): Response<MoviesModel>
 
     @GET(Constants.URL.DETAILS + Constants.APIKEY.KEY)
-    suspend fun getMovieById(@Path(value = "movie_id", encoded = true) movie_id: Int): Response<MoviesResult>
+    suspend fun getMovieById(
+        @Path(
+            value = "movie_id",
+            encoded = true
+        ) movie_id: Int
+    ): Response<MoviesResult>
 
     @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     suspend fun getCastList(@Path(value = "id", encoded = true) id: Int): Response<CastModel>
 
     @GET(Constants.URL.SIMILAR + Constants.APIKEY.KEY)
-    suspend fun getSimilarMovies(@Path(value = "id", encoded = true) id: Int): Response<MoviesModel>
+    suspend fun getSimilarMovies(
+        @Path(value = "id", encoded = true) id: Int,
+        @Query("page") page: Int = 1
+    ): Response<MoviesModel>
 
     @GET(Constants.URL.SEARCH + Constants.APIKEY.KEY)
     suspend fun getSearch(@Query("query") name: String): Response<MoviesModel>
