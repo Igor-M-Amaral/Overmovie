@@ -13,7 +13,10 @@ import retrofit2.http.Query
 interface MovieService {
 
     @GET(Constants.URL.TYPE_POINT + Constants.APIKEY.KEY)
-    suspend fun getMovieList(@Path(value = "type") type: String): Response<MoviesModel>
+    suspend fun getMovieList(
+        @Path(value = "type") type: String,
+        @Query("page") page: Int = 1
+    ): Response<MoviesModel>
 
     @GET(Constants.URL.TRENDING + Constants.APIKEY.KEY)
     suspend fun getTrendingMovies(): Response<MoviesModel>
