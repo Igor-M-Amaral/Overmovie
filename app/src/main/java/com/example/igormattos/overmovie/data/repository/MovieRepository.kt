@@ -8,6 +8,8 @@ import com.example.igormattos.overmovie.data.model.CastModel
 import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.data.paging.PopularPagingSource
+import com.example.igormattos.overmovie.data.paging.SearchPagingSource
+import com.example.igormattos.overmovie.data.paging.TrendingPagingSource
 import kotlinx.coroutines.flow.Flow
 
 
@@ -47,21 +49,17 @@ class MovieRepository(private val service: MovieService)  {
         return null
     }
 
-    suspend fun getTrendingMovies(): MoviesModel? {
-        val request = service.getTrendingMovies()
-
-        if (request.isSuccessful) {
-            return request.body()!!
-        }
-        return null
+    fun getTrendingMovies(): Flow<PagingData<MoviesResult>> {
+        val request = Pager(PagingConfig(pageSize = 1)){
+            TrendingPagingSource(service)
+        }.flow
+        return request
     }
 
-    suspend fun getSearch(name: String): MoviesModel? {
-        val request = service.getSearch(name)
-
-        if (request.isSuccessful) {
-            return request.body()!!
-        }
-        return null
+    fun getSearch(name: String): Flow<PagingData<MoviesResult>> {
+        val request = Pager(PagingConfig(pageSize = 1)){
+            SearchPagingSource(service, name)
+        }.flow
+        return request
     }
 }

@@ -19,7 +19,7 @@ interface MovieService {
     ): Response<MoviesModel>
 
     @GET(Constants.URL.TRENDING + Constants.APIKEY.KEY)
-    suspend fun getTrendingMovies(): Response<MoviesModel>
+    suspend fun getTrendingMovies(@Query("page") page: Int = 1): Response<MoviesModel>
 
     @GET(Constants.URL.DETAILS + Constants.APIKEY.KEY)
     suspend fun getMovieById(
@@ -39,6 +39,6 @@ interface MovieService {
     ): Response<MoviesModel>
 
     @GET(Constants.URL.SEARCH + Constants.APIKEY.KEY)
-    suspend fun getSearch(@Query("query") name: String): Response<MoviesModel>
+    suspend fun getSearch(@Query("query") name: String, @Query("page") page: Int = 1): Response<MoviesModel>
 
 }

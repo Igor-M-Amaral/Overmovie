@@ -88,6 +88,17 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.search.observe(viewLifecycleOwner, Observer { listResult ->
+            lifecycleScope.launch {
+                binding.recyclerView.layoutManager =
+                    GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerView.adapter = adapter
+                listResult.collect{
+                    adapter.submitData(it)
+                }
+            }
+        })
+
         viewModel.nameTitle.observe(viewLifecycleOwner, Observer {
             binding.homeToolbar.title = it
         })

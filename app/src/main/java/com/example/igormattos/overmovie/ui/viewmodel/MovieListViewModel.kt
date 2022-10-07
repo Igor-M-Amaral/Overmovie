@@ -22,8 +22,8 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
     private val _movies = MutableLiveData<Flow<PagingData<MoviesResult>>>(emptyFlow())
     val movies: LiveData<Flow<PagingData<MoviesResult>>> = _movies
 
-    private val _search = MutableLiveData<List<MoviesResult>>()
-    val search: LiveData <List<MoviesResult>> = _search
+    private val _search = MutableLiveData<Flow<PagingData<MoviesResult>>>(emptyFlow())
+    val search: LiveData<Flow<PagingData<MoviesResult>>> = _search
 
     val nameTitle = MutableLiveData<String>()
 
@@ -40,18 +40,16 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
             try {
                 if (filter == Constants.FILTER.TRENDING) {
                     val result = repository.getTrendingMovies()
-                    if (result != null) {
-//                        _movies.postValue(result.moviesResults)
-//                        nameTitle.value = filter.uppercase()
-//                        progressBar.value = false
-                    }
+                    _movies.postValue(result.cachedIn(viewModelScope))
+                    nameTitle.value = filter.uppercase()
+                    progressBar.value = false
+
                 } else {
+
                     val result = repository.getMovieList(filter)
-                    if (result != null) {
-                        _movies.postValue(result.cachedIn(viewModelScope))
-                        progressBar.value = false
-                        nameTitle.value = filter.uppercase()
-                    }
+                    _movies.postValue(result.cachedIn(viewModelScope))
+                    progressBar.value = false
+                    nameTitle.value = filter.uppercase()
                 }
             } catch (e: Exception) {
                 errorMessage.value = "Something went wrong!"
@@ -60,11 +58,12 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
     }
 
     fun searchPostsTitleContains(searchString: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             try {
                 val result = repository.getSearch(searchString)
-                _search.postValue(result!!.moviesResults)
-            }catch (e: NullPointerException) { }
+                _search.postValue(result.cachedIn(viewModelScope))
+            } catch (e: NullPointerException) {
+            }
         }
     }
 }

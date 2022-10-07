@@ -7,9 +7,7 @@ import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.utils.Constants
 import java.lang.Exception
 
-//TODO I need to improve performance when using this page
-
-class SimilarPagingSource(private val service: MovieService, private val id: Int) :
+class TrendingPagingSource(private val service: MovieService) :
     PagingSource<Int, MoviesResult>() {
     override fun getRefreshKey(state: PagingState<Int, MoviesResult>): Int? {
         return null
@@ -19,7 +17,7 @@ class SimilarPagingSource(private val service: MovieService, private val id: Int
 
         return try {
             val currentPage = params.key ?: Constants.PAGE.DEFAULT_PAGE
-            val response = service.getSimilarMovies(id, currentPage)
+            val response = service.getTrendingMovies(currentPage)
             val responseData = mutableListOf<MoviesResult>()
             val data = response.body()?.moviesResults ?: emptyList()
             responseData.addAll(data)
