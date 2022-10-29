@@ -38,18 +38,18 @@ class OverViewViewModel(
     var favorite = MutableLiveData(false)
 
     fun getMovieById(id: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getMovieById(id)
             _movieDetails.postValue(result!!)
         }
     }
 
     fun getCastList(id: Int) {
-        progressBar.value = true
-        viewModelScope.launch{
+        progressBar.postValue(true)
+        viewModelScope.launch(Dispatchers.IO){
             val result = repository.getCastList(id)
             _cast.postValue(result!!)
-            progressBar.value = false
+            progressBar.postValue(false)
         }
     }
 

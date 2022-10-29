@@ -27,15 +27,12 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
 
     val nameTitle = MutableLiveData<String>()
 
-    val progressBar = MutableLiveData<Boolean>()
-
     val errorMessage = MutableLiveData<String>()
 
 
     fun listMovie(filter: String) {
         moviefilter = filter
-        viewModelScope.launch {
-            progressBar.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (filter == "trending") {
                     val result = repository.getTrendingMovies()
@@ -45,10 +42,10 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
                 } else {
                     val result = repository.getMovieList(filter)
                     _movies.postValue(result.cachedIn(viewModelScope))
-                    nameTitle.value = filter.uppercase()
+                    nameTitle.postValue(filter.uppercase())
                 }
             } catch (e: Exception) {
-                errorMessage.value = "Something went wrong!"
+                errorMessage.postValue("Something went wrong!")
             }
         }
     }

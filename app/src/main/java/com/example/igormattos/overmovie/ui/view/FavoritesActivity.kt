@@ -27,9 +27,6 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
     private var adapter = FavoriteAdapter()
     private lateinit var searchView: SearchView
 
-    private val progressBar: ProgressBar by lazy {
-        binding.mainProgressbar
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +36,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.homeToolbar.title = "Favorites"
 
-        viewModel.progressBar.observe(this, Observer{
-            if(it) showProgressBar() else (hideProgressBar())
 
-        })
         val listener = object : MovieListener {
             override fun onDeleteById(movie: MovieDB) {
                 viewModel.deleteFavorite(movie)
@@ -116,15 +110,6 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
                 }
             })
         }
-    }
-
-
-    private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        progressBar.visibility = View.GONE
     }
 
     override fun onClick(v: View) {

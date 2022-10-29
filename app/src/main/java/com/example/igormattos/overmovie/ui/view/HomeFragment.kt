@@ -15,6 +15,7 @@ import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.HomeFragmentBinding
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MovieDB
+import com.example.igormattos.overmovie.data.paging.LoaderAdapter
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.MovieAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
@@ -49,11 +50,6 @@ class HomeFragment : Fragment() {
         observe()
 
 
-        viewModel.progressBar.observe(viewLifecycleOwner, Observer {
-            if (it) showProgressBar() else (hideProgressBar())
-
-        })
-
         val listener = object : MovieListener {
             override fun onDeleteById(movie: MovieDB) {
             }
@@ -82,7 +78,10 @@ class HomeFragment : Fragment() {
             lifecycleScope.launch {
                 binding.recyclerView.layoutManager =
                     GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
-                binding.recyclerView.adapter = adapter
+                binding.recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+                    header = LoaderAdapter(),
+                    footer = LoaderAdapter()
+                )
                 listResult.collect{
                     adapter.submitData(it)
                 }
@@ -134,14 +133,6 @@ class HomeFragment : Fragment() {
                 }
             })
         }
-    }
-
-    private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        progressBar.visibility = View.GONE
     }
 
 }

@@ -23,9 +23,6 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
     private val _search = MutableLiveData<List<MovieDB>>()
     val search: LiveData<List<MovieDB>> = _search
 
-    val progressBar = MutableLiveData<Boolean>()
-
-
      fun listFavorites(){
          viewModelScope.launch(Dispatchers.IO){
              _movies.postValue(favoriteDao.getAllFavorites())

@@ -17,7 +17,6 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         tools:title="Favorites" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -26,14 +25,5 @@
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_favorites" />
-
-    <ProgressBar
-        android:id="@+id/main_progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:visibility="visible"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:indeterminateTint="@color/red"/>
 
 </RelativeLayout>
