@@ -6,13 +6,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toolbar
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.ActivityFavoritesBinding
 import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.favoriteadapter.FavoriteAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,6 +25,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityFavoritesBinding
     private val viewModel: FavoritesViewModel by viewModel()
     private var adapter = FavoriteAdapter()
+    private lateinit var searchView: SearchView
 
     private val progressBar: ProgressBar by lazy {
         binding.mainProgressbar
@@ -55,6 +61,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.homeToolbar.setOnClickListener(this)
 
+        initSearchBar()
         observer()
 
         setContentView(binding.root)
@@ -73,7 +80,44 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             binding.recyclerView.adapter = adapter
             adapter.submitList(it)
         })
+
+        viewModel.search.observe(this, Observer {
+            binding.recyclerView.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.recyclerView.adapter = adapter
+
+            adapter.submitList(it)
+        })
     }
+
+    private fun initSearchBar() {
+        with(binding.homeToolbar) {
+            this.inflateMenu(R.menu.search_menu)
+
+            val searchItem = menu.findItem(R.id.menu_search)
+            searchView = searchItem.actionView as SearchView
+
+            searchView.isIconified = false
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    val searchString = searchView.query.toString()
+                    viewModel.searchPostsTitleContains(searchString)
+                    searchView.clearFocus()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+
+                        viewModel.searchPostsTitleContains(it)
+                    }
+                    return true
+                }
+            })
+        }
+    }
+
 
     private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE

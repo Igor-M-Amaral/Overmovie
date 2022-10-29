@@ -21,4 +21,7 @@ interface FavoriteDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM ${Constants.TABLE.NAME} WHERE id = :id)")
     suspend fun favoriteExist(id: Int): Boolean
+
+    @Query("SELECT * FROM ${Constants.TABLE.NAME} WHERE title LIKE :searchQuery || '%'")
+    suspend fun searchDataBase(searchQuery: String) : List<MovieDB>
 }

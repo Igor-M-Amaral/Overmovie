@@ -14,8 +14,8 @@
         android:background="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:title="Favorites"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        tools:title="Favorites" />
 
 
     <androidx.recyclerview.widget.RecyclerView

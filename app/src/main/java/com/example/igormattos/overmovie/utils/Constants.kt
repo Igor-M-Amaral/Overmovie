@@ -14,19 +14,13 @@ class Constants private constructor(){
         const val IMAGE_BASE = "https://image.tmdb.org/t/p/w500/"
     }
     object APIKEY{
-        const val KEY = "PUT YOUR API KEY HERE"
+        const val KEY = "38e916798d955f2ece239fec2cb84d59"
     }
 
     object BUNDLE {
         const val MOVIEFILTER = "moviefilter"
     }
 
-    object FILTER {
-        const val UPCOMING = "upcoming"
-        const val POPULAR = "popular"
-        const val TRENDING = "trending"
-        const val RATED = "top_rated"
-    }
 
     object TABLE{
         const val NAME = "FAVORITE"

@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         initSearchBar()
         observe()
 
+
         viewModel.progressBar.observe(viewLifecycleOwner, Observer {
             if (it) showProgressBar() else (hideProgressBar())
 

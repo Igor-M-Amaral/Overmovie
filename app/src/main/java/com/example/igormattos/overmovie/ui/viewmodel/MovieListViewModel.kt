@@ -33,22 +33,18 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
 
 
     fun listMovie(filter: String) {
-        progressBar.value = true
         moviefilter = filter
-
         viewModelScope.launch {
+            progressBar.postValue(true)
             try {
-                if (filter == Constants.FILTER.TRENDING) {
+                if (filter == "trending") {
                     val result = repository.getTrendingMovies()
                     _movies.postValue(result.cachedIn(viewModelScope))
                     nameTitle.value = filter.uppercase()
-                    progressBar.value = false
 
                 } else {
-
                     val result = repository.getMovieList(filter)
                     _movies.postValue(result.cachedIn(viewModelScope))
-                    progressBar.value = false
                     nameTitle.value = filter.uppercase()
                 }
             } catch (e: Exception) {
@@ -58,7 +54,7 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
     }
 
     fun searchPostsTitleContains(searchString: String) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             try {
                 val result = repository.getSearch(searchString)
                 _search.postValue(result.cachedIn(viewModelScope))
@@ -66,4 +62,5 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
             }
         }
     }
+
 }
