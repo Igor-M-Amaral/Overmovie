@@ -34,7 +34,7 @@ class FavoriteViewHolder(private val binding: RowFavoritesBinding, private val l
                 .setTitle("Remove")
                 .setMessage("Do you want to remove this movie?")
                 .setPositiveButton("Yes") { _, _ ->
-                    listener.onDeleteById(movie)
+                    listener.onDeleteMovie(movie)
                 }
                 .setNeutralButton("Cancel", null)
                 .show()

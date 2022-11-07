@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = HomeFragmentBinding.inflate(layoutInflater)
 
@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
 
 
         val listener = object : MovieListener {
-            override fun onDeleteById(movie: MovieDB) {
+            override fun onDeleteMovie(movie: MovieDB) {
             }
 
             override fun onListClick(id: Int) {

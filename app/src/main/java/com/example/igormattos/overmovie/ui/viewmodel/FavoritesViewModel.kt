@@ -20,8 +20,6 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
     private val _movies = MutableLiveData<List<MovieDB>>()
     val movies: LiveData<List<MovieDB>> = _movies
 
-    private val _search = MutableLiveData<List<MovieDB>>()
-    val search: LiveData<List<MovieDB>> = _search
 
      fun listFavorites(){
          viewModelScope.launch(Dispatchers.IO){
@@ -29,16 +27,16 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
          }
     }
 
-    fun deleteFavorite(id: MovieDB) {
+    fun deleteFavorite(movie: MovieDB) {
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteDao.removeMovie(id)
+            favoriteDao.removeMovie(movie)
         }
     }
 
     fun searchPostsTitleContains(searchString: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _search.postValue(favoriteDao.searchDataBase(searchString))
+                _movies.postValue(favoriteDao.searchDataBase(searchString))
             } catch (e: NullPointerException) {
             }
         }

@@ -17,7 +17,6 @@ import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.castadapter.CastAdapter
-import com.example.igormattos.overmovie.ui.adapter.movieadapter.MovieAdapter
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.SimilarAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.OverViewViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,11 +39,11 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
         binding = ActivityOverViewBinding.inflate(layoutInflater)
 
-        binding.fabPlayButton.setOnClickListener(this)
+        binding.fabFavoriteButton.setOnClickListener(this)
         binding.buttonBack.setOnClickListener(this)
 
         val listener = object : MovieListener {
-            override fun onDeleteById(movie: MovieDB) {
+            override fun onDeleteMovie(movie: MovieDB) {
             }
 
             override fun onListClick(id: Int) {
@@ -62,7 +61,6 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
         adapterSimilar.attachListener(listener)
 
-
         observer()
 
         setContentView(binding.root)
@@ -70,7 +68,7 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.fabPlayButton -> {
+            R.id.fabFavoriteButton -> {
                 viewModel.favoriteMovie()
                 viewModel.checkFavorite()
             }
@@ -127,9 +125,9 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.favorite.observe(this, Observer {
             binding.apply {
                 if (it) {
-                    fabPlayButton.setColorFilter(Color.RED)
+                    fabFavoriteButton.setColorFilter(Color.RED)
                 } else {
-                    fabPlayButton.setColorFilter(Color.WHITE)
+                    fabFavoriteButton.setColorFilter(Color.WHITE)
                 }
             }
         })

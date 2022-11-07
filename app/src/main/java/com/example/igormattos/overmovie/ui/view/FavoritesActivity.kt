@@ -38,9 +38,9 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
 
 
         val listener = object : MovieListener {
-            override fun onDeleteById(movie: MovieDB) {
+            override fun onDeleteMovie(movie: MovieDB) {
                 viewModel.deleteFavorite(movie)
-                viewModel.listFavorites()
+                onResume()
             }
 
             override fun onListClick(id: Int) {
@@ -56,7 +56,8 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
         binding.homeToolbar.setOnClickListener(this)
 
         initSearchBar()
-        observer()
+        viewModel.listFavorites()
+
 
         setContentView(binding.root)
     }
@@ -64,9 +65,6 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         viewModel.listFavorites()
-    }
-
-    private fun observer() {
 
         viewModel.movies.observe(this, Observer {
             binding.recyclerView.layoutManager =
@@ -75,13 +73,10 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             adapter.submitList(it)
         })
 
-        viewModel.search.observe(this, Observer {
-            binding.recyclerView.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            binding.recyclerView.adapter = adapter
+    }
 
-            adapter.submitList(it)
-        })
+    override fun onClick(v: View) {
+        finish()
     }
 
     private fun initSearchBar() {
@@ -111,9 +106,4 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             })
         }
     }
-
-    override fun onClick(v: View) {
-        finish()
-    }
-
 }
