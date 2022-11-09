@@ -3,9 +3,13 @@ package com.example.igormattos.overmovie.ui.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.igormattos.overmovie.databinding.ActivityRegisterBinding
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
+import com.example.igormattos.overmovie.utils.methods.UtilsMethods
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -30,15 +34,35 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.editEmail.text.toString()
             val password = binding.editPassword.text.toString()
 
-            viewModel.register(email, userName, password)
+            val result = UtilsMethods.validationLogin(email, password)
+
+            if (result.successful) {
+                binding.buttonContinue.isEnabled = false
+                binding.progressCircular.visibility = View.VISIBLE
+
+                viewModel.register(email, password)
+
+                viewModel.verify.observe(this, Observer {
+                    if (it) {
+                        binding.buttonContinue.isEnabled = true
+                        binding.progressCircular.visibility = View.GONE
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    }
+                })
+            } else {
+                binding.buttonContinue.isEnabled = true
+                binding.progressCircular.visibility = View.GONE
+                Snackbar.make(binding.buttonContinue, "${result.error}", Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
 
-        viewModel.verify.observe(this, Observer {
-            if (it){
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
+        viewModel.message.observe(this, Observer {
+            binding.buttonContinue.isEnabled = true
+            binding.progressCircular.visibility = View.GONE
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
-
     }
 
 }

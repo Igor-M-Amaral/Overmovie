@@ -3,9 +3,9 @@ package com.example.igormattos.overmovie.data.di
 import android.util.Log
 import com.example.igormattos.overmovie.data.api.MovieService
 import com.example.igormattos.overmovie.data.local.FavoriteDatabase
-import com.example.igormattos.overmovie.data.repository.AuthRepository
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.repository.MovieRepository
+import com.google.firebase.auth.FirebaseAuth
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +20,7 @@ object DataModule {
     private const val OK_HTTP= "Ok http"
 
     fun load() {
-        loadKoinModules(movieModule() + networkModule() + daoModule() + authModule())
+        loadKoinModules(movieModule() + networkModule() + daoModule()  + firebaseAuth())
     }
 
     private fun movieModule(): Module {
@@ -30,9 +30,10 @@ object DataModule {
         }
     }
 
-    private fun authModule() : Module {
+
+    private fun firebaseAuth() : Module{
         return module {
-            single { AuthRepository() }
+            single { FirebaseAuth.getInstance() }
         }
     }
 
