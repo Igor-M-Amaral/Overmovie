@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "30295332978",
+    "project_id": "overmovie-88806",
+    "storage_bucket": "overmovie-88806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30295332978:android:54f45424fc08bf371a4aeb",
+        "android_client_info": {
+          "package_name": "com.example.igormattos.overmovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30295332978-48tuussq5t4sarjqluicicf78uv3kn4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWHQMrya4n_BT6tDal4pixb0vCPpSDXy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30295332978-48tuussq5t4sarjqluicicf78uv3kn4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

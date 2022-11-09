@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
 }
+apply plugin: 'com.android.application'
+// Add the following line:
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
 android {
     compileSdk 32
@@ -76,6 +79,11 @@ dependencies {
 
     //Coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //material design
     implementation 'com.google.android.material:material:1.6.1'

@@ -16,5 +16,6 @@ class App : Application() {
 
         PresentationModule.load()
         DataModule.load()
+
     }
 }
