@@ -23,6 +23,8 @@
   * [Room](https://developer.android.com/topic/libraries/architecture/room) - SQLite object mapping library.
  
  * [Koin](https://insert-koin.io/) - Dependency Injection Framework
+ 
+ * [Firebase Authentication](https://firebase.google.com/docs/auth) - Firebase Authentication provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users to your app.
   
  * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - A concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
   
