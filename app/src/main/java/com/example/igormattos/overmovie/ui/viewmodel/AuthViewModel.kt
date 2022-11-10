@@ -12,6 +12,13 @@ class AuthViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
 
     val message = MutableLiveData<String>()
 
+    fun checkIfUserIsLogger(){
+        if (firebaseAuth.currentUser != null){
+            _verify.postValue(true)
+        } else{
+            _verify.postValue(false)
+        }
+    }
 
     fun register(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -38,6 +45,10 @@ class AuthViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
                 message.postValue(it.exception?.message ?: "")
             }
         }
+    }
+
+    fun logout(){
+        firebaseAuth.signOut()
     }
 
     fun forgetPassword(email: String) {

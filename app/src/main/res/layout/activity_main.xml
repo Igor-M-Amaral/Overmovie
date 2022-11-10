@@ -27,12 +27,33 @@
         app:menu="@menu/activity_main_menu"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/button_navigation_view"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_favorites"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/fab_expand"
+        app:layout_constraintEnd_toEndOf="@+id/fab_expand"
         app:srcCompat="@drawable/ic_favorite" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_logout"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/fab_favorites"
+        app:layout_constraintEnd_toEndOf="@+id/fab_favorites"
+        app:srcCompat="@drawable/ic_logout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

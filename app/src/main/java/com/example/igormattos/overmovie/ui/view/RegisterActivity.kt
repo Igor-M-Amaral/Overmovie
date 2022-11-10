@@ -30,11 +30,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
 
         binding.buttonContinue.setOnClickListener {
-            val userName = binding.editUsername.text.toString()
             val email = binding.editEmail.text.toString()
             val password = binding.editPassword.text.toString()
+            val confirmPassword = binding.editUsername.text.toString()
 
-            val result = UtilsMethods.validationLogin(email, password)
+            val result = UtilsMethods.validationRegister(email, password, confirmPassword)
 
             if (result.successful) {
                 binding.buttonContinue.isEnabled = false

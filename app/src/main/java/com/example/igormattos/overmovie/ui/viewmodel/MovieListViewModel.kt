@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
+import java.util.concurrent.TimeoutException
 
 class MovieListViewModel(private val repository: MovieRepository) : ViewModel() {
 
@@ -37,14 +38,14 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
                 if (filter == "trending") {
                     val result = repository.getTrendingMovies()
                     _movies.postValue(result.cachedIn(viewModelScope))
-                    nameTitle.value = filter.uppercase()
+                    nameTitle.postValue(filter.uppercase())
 
                 } else {
                     val result = repository.getMovieList(filter)
                     _movies.postValue(result.cachedIn(viewModelScope))
                     nameTitle.postValue(filter.uppercase())
                 }
-            } catch (e: Exception) {
+            } catch (e: TimeoutException) {
                 errorMessage.postValue("Something went wrong!")
             }
         }
