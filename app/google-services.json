@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "30295332978-avp3h86envdce5i0ccor9nem3vrml34o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.igormattos.overmovie",
+            "certificate_hash": "6fd1e9bbd7252be06ea0dac025c0d6e859ae6458"
+          }
+        },
+        {
           "client_id": "30295332978-48tuussq5t4sarjqluicicf78uv3kn4c.apps.googleusercontent.com",
           "client_type": 3
         }

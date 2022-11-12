@@ -45,8 +45,8 @@ class MovieListViewModel(private val repository: MovieRepository) : ViewModel() 
                     _movies.postValue(result.cachedIn(viewModelScope))
                     nameTitle.postValue(filter.uppercase())
                 }
-            } catch (e: TimeoutException) {
-                errorMessage.postValue("Something went wrong!")
+            } catch (e: Exception) {
+                errorMessage.postValue(e.message)
             }
         }
     }

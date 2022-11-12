@@ -19,7 +19,6 @@ import com.example.igormattos.overmovie.data.paging.LoaderAdapter
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.MovieAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
