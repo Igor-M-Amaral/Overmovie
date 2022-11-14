@@ -35,7 +35,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.view.OverViewActivity"
+            android:name=".ui.view.DetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:exported="false" />
         <activity
             android:name=".ui.view.MainActivity"

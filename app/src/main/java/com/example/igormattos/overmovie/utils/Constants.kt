@@ -10,6 +10,7 @@ class Constants private constructor(){
         const val SIMILAR = "/3/movie/{id}/similar?api_key="
         const val DETAILS = "/3/movie/{movie_id}?api_key="
         const val SEARCH = "/3/search/movie?api_key="
+        const val VIDEOS = "/3/movie/{id}/videos?api_key="
 
         const val IMAGE_BASE = "https://image.tmdb.org/t/p/w500/"
     }

@@ -12,19 +12,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.databinding.ActivityOverViewBinding
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MovieDB
+import com.example.igormattos.overmovie.databinding.ActivityDetailsBinding
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.castadapter.CastAdapter
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.SimilarAdapter
+import com.example.igormattos.overmovie.ui.video.YoutubePlay
 import com.example.igormattos.overmovie.ui.viewmodel.OverViewViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class OverViewActivity : AppCompatActivity(), View.OnClickListener {
+class DetailsActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding: ActivityOverViewBinding
+    private lateinit var binding: ActivityDetailsBinding
     private val viewModel: OverViewViewModel by viewModel()
     private val adapterSimilar = SimilarAdapter()
     private val adapterCast = CastAdapter()
@@ -37,9 +38,10 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
-        binding = ActivityOverViewBinding.inflate(layoutInflater)
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
 
         binding.fabFavoriteButton.setOnClickListener(this)
+        binding.fabPlay.setOnClickListener(this)
         binding.buttonBack.setOnClickListener(this)
 
         val listener = object : MovieListener {
@@ -47,7 +49,7 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(applicationContext, OverViewActivity::class.java)
+                val intent = Intent(applicationContext, DetailsActivity::class.java)
                 val bundle = Bundle()
                 bundle.putInt("ID", id)
                 intent.putExtras(bundle)
@@ -56,7 +58,6 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
         }
         viewModel.progressBar.observe(this, Observer {
             if (it) showProgressBar() else (hideProgressBar())
-
         })
 
         adapterSimilar.attachListener(listener)
@@ -76,6 +77,14 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button_back -> {
                 finish()
             }
+            R.id.fabPlay -> {
+                if (viewModel.videos.value != null && viewModel.videos.value!!.results.isNotEmpty()){
+                    val video = YoutubePlay(viewModel.videos.value!!.results.last().key)
+                    video.show(supportFragmentManager, "Video")
+                }else{
+                    Toast.makeText(applicationContext, "Trailer not available", Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
     }
@@ -86,6 +95,7 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.getMovieById(id)
         viewModel.getCastList(id)
         viewModel.getSimilarMovies(id)
+        viewModel.getVideoById(id)
 
         viewModel.cast.observe(this, Observer {
             binding.recyclerView.layoutManager =
@@ -107,7 +117,6 @@ class OverViewActivity : AppCompatActivity(), View.OnClickListener {
                 textReleaseDate.text = it.release_date
                 textOverview.text = it.overview
                 textAverage.text = String.format("%.1f", it.vote_average)
-                textPopularity.text = String.format("%.0f", it.popularity)
 
                 Glide.with(applicationContext)
                     .load(Constants.URL.IMAGE_BASE + it.backdrop_path)

@@ -3,8 +3,8 @@ package com.example.igormattos.overmovie.data.di
 import android.util.Log
 import com.example.igormattos.overmovie.data.api.MovieService
 import com.example.igormattos.overmovie.data.local.FavoriteDatabase
+import com.example.igormattos.overmovie.data.repository.MovieRepositoryImpl
 import com.example.igormattos.overmovie.utils.Constants
-import com.example.igormattos.overmovie.data.repository.MovieRepository
 import com.google.firebase.auth.FirebaseAuth
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +25,7 @@ object DataModule {
 
     private fun movieModule(): Module {
         return module {
-            single { MovieRepository(get()) }
+            single { MovieRepositoryImpl(get()) }
 
         }
     }

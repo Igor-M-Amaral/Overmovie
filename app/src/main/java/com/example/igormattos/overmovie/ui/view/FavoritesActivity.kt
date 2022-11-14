@@ -4,12 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toolbar
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.ActivityFavoritesBinding
@@ -17,7 +13,6 @@ import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.utils.listener.MovieListener
 import com.example.igormattos.overmovie.ui.adapter.favoriteadapter.FavoriteAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
@@ -44,7 +39,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(applicationContext, OverViewActivity::class.java)
+                val intent = Intent(applicationContext, DetailsActivity::class.java)
                 val bundle = Bundle()
                 bundle.putInt("ID", id)
                 intent.putExtras(bundle)

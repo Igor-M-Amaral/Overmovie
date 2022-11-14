@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MoviesResult
-import com.example.igormattos.overmovie.data.repository.MovieRepository
+import com.example.igormattos.overmovie.data.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 import java.util.concurrent.TimeoutException
 
-class MovieListViewModel(private val repository: MovieRepository) : ViewModel() {
+class MovieListViewModel(private val repository: MovieRepositoryImpl) : ViewModel() {
 
     private var moviefilter = "popular"
 

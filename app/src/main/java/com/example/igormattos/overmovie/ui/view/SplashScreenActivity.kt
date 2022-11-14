@@ -23,8 +23,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         viewModel.checkIfUserIsLogger()
 
-        binding.imgSplash.alpha = 0f
-        binding.imgSplash.animate().setDuration(1000).alpha(1f).withEndAction {
+        binding.imgSplash.alpha = 0.2f
+        binding.imgSplash.animate().setDuration(800).alpha(1f).withEndAction {
 
             viewModel.verify.observe(this, Observer {
                 if (it) {

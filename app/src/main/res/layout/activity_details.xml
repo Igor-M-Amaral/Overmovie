@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.view.OverViewActivity">
+    tools:context=".ui.view.DetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -28,8 +28,7 @@
                 android:id="@+id/img_movieLargePoster"
                 android:layout_width="match_parent"
                 android:layout_height="242dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +70,7 @@
             <TextView
                 android:id="@+id/text_releaseDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_gravity="start"
                 android:layout_marginStart="2dp"
                 android:drawablePadding="3dp"
@@ -86,7 +85,7 @@
             <TextView
                 android:id="@+id/text_average"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_gravity="start"
                 android:layout_marginStart="2dp"
                 android:drawablePadding="3dp"
@@ -99,22 +98,6 @@
                 app:layout_constraintTop_toBottomOf="@id/text_releaseDate"
                 tools:text="6.8" />
 
-            <TextView
-                android:id="@+id/text_popularity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="2dp"
-                android:drawablePadding="3dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:lines="1"
-                android:textSize="12sp"
-                app:drawableStartCompat="@drawable/ic_popularity"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_average"
-                tools:text="768.138" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
@@ -124,7 +107,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_popularity"
+                app:layout_constraintTop_toBottomOf="@id/text_average"
                 tools:listitem="@layout/row_cast" />
 
             <TextView
@@ -221,6 +204,20 @@
         app:fabSize="mini"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="end|bottom"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_play_arrow"
+        android:alpha="0.7"
+        app:backgroundTint="@color/red_light"
+        app:borderWidth="1dp"
+        app:fabSize="mini"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="center"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

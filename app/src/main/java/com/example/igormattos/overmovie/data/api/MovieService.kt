@@ -2,6 +2,7 @@ package com.example.igormattos.overmovie.data.api
 
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.CastModel
+import com.example.igormattos.overmovie.data.model.MovieVideo
 import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
 import retrofit2.Call
@@ -31,6 +32,9 @@ interface MovieService {
 
     @GET(Constants.URL.CAST + Constants.APIKEY.KEY)
     suspend fun getCastList(@Path(value = "id", encoded = true) id: Int): Response<CastModel>
+
+    @GET(Constants.URL.VIDEOS + Constants.APIKEY.KEY)
+    suspend fun getVideoById(@Path(value = "id", encoded = true) id: Int) : Response<MovieVideo>
 
     @GET(Constants.URL.SIMILAR + Constants.APIKEY.KEY)
     suspend fun getSimilarMovies(

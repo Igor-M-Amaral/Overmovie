@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(activity, OverViewActivity::class.java)
+                val intent = Intent(activity, DetailsActivity::class.java)
                 val bundle = Bundle()
                 bundle.putInt("ID", id)
                 intent.putExtras(bundle)

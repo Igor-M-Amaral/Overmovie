@@ -6,18 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.igormattos.overmovie.data.model.CastModel
 import com.example.igormattos.overmovie.data.model.MovieDB
-import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
-import com.example.igormattos.overmovie.data.repository.MovieRepository
 import com.example.igormattos.overmovie.data.local.FavoriteDao
+import com.example.igormattos.overmovie.data.model.MovieVideo
+import com.example.igormattos.overmovie.data.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OverViewViewModel(
     private val favoriteDao: FavoriteDao,
-    private val repository: MovieRepository
+    private val repository: MovieRepositoryImpl
 ) : ViewModel() {
-
 
     private val _cast = MutableLiveData<CastModel>()
     val cast: MutableLiveData<CastModel> = _cast
@@ -30,6 +29,9 @@ class OverViewViewModel(
 
     private val _movieDetails = MutableLiveData<MoviesResult>()
     val movieDetails: MutableLiveData<MoviesResult> = _movieDetails
+
+    private val _videos = MutableLiveData<MovieVideo>()
+    val videos: MutableLiveData<MovieVideo> = _videos
 
     val errorMessage = MutableLiveData<String>()
 
@@ -57,6 +59,13 @@ class OverViewViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getSimilarMovies(id)
             _similar.postValue(result?.moviesResults)
+        }
+    }
+
+    fun getVideoById(id: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getVideoById(id)
+            _videos.postValue(result!!)
         }
     }
 
