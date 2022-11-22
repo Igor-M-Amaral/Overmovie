@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.R
@@ -54,11 +55,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(activity, DetailsActivity::class.java)
-                val bundle = Bundle()
-                bundle.putInt("ID", id)
-                intent.putExtras(bundle)
-                startActivity(intent)
+                val action = HomeFragmentDirections.navDetails(id)
+
+                findNavController().navigate(action)
             }
         }
 

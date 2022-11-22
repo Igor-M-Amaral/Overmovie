@@ -13,7 +13,7 @@ import com.example.igormattos.overmovie.data.repository.MovieRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class OverViewViewModel(
+class MovieDetailsViewModel(
     private val favoriteDao: FavoriteDao,
     private val repository: MovieRepositoryImpl
 ) : ViewModel() {

@@ -2,10 +2,8 @@ package com.example.igormattos.overmovie.ui.di
 
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
-import com.example.igormattos.overmovie.ui.viewmodel.OverViewViewModel
-import com.example.igormattos.overmovie.data.local.FavoriteDatabase
+import com.example.igormattos.overmovie.ui.viewmodel.MovieDetailsViewModel
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -30,7 +28,7 @@ object PresentationModule {
 
     private fun overviewModule(): Module {
         return module {
-            factory { OverViewViewModel(get(), get()) }
+            factory { MovieDetailsViewModel(get(), get()) }
         }
     }
 

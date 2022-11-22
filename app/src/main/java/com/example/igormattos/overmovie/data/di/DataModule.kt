@@ -30,7 +30,6 @@ object DataModule {
         }
     }
 
-
     private fun firebaseAuth() : Module{
         return module {
             single { FirebaseAuth.getInstance() }

@@ -39,7 +39,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(applicationContext, DetailsActivity::class.java)
+                val intent = Intent(applicationContext, DetailsFragment::class.java)
                 val bundle = Bundle()
                 bundle.putInt("ID", id)
                 intent.putExtras(bundle)

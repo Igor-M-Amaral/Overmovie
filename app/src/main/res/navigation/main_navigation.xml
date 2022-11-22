@@ -12,8 +12,12 @@
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="string"
-            android:defaultValue="upcoming"/>
+            android:defaultValue="upcoming"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_details"
+            app:destination="@id/nav_details" />
+
     </fragment>
 
     <fragment
@@ -23,8 +27,11 @@
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="string"
-            android:defaultValue="popular"/>
+            android:defaultValue="popular"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_details"
+            app:destination="@id/nav_details" />
     </fragment>
 
     <fragment
@@ -34,8 +41,11 @@
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="string"
-            android:defaultValue="trending"/>
+            android:defaultValue="trending"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_details"
+            app:destination="@id/nav_details" />
     </fragment>
 
     <fragment
@@ -45,10 +55,24 @@
         tools:layout="@layout/home_fragment">
         <argument
             android:name="moviefilter"
-            app:argType="string"
-            android:defaultValue="top_rated"/>
+            android:defaultValue="top_rated"
+            app:argType="string" />
+        <action
+            android:id="@+id/nav_details"
+            app:destination="@id/nav_details" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/nav_details"
+        android:name="com.example.igormattos.overmovie.ui.view.DetailsFragment"
+        tools:layout="@layout/fragment_details"
+        android:label="Details">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_nav_details_self"
+            app:destination="@id/nav_details" />
+    </fragment>
 
 </navigation>
