@@ -1,36 +1,36 @@
 package com.example.igormattos.overmovie.ui.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.databinding.ActivityFavoritesBinding
 import com.example.igormattos.overmovie.data.model.MovieDB
-import com.example.igormattos.overmovie.utils.listener.MovieListener
+import com.example.igormattos.overmovie.databinding.FragmentFavoriteBinding
 import com.example.igormattos.overmovie.ui.adapter.favoriteadapter.FavoriteAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.FavoritesViewModel
+import com.example.igormattos.overmovie.utils.listener.MovieListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
+class FavoriteFragment : Fragment(), View.OnClickListener {
 
-    private lateinit var binding: ActivityFavoritesBinding
+    private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: FavoritesViewModel by viewModel()
     private var adapter = FavoriteAdapter()
     private lateinit var searchView: SearchView
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View{
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-
-        binding = ActivityFavoritesBinding.inflate(layoutInflater)
-
-        binding.homeToolbar.title = "Favorites"
-
+        binding = FragmentFavoriteBinding.inflate(layoutInflater)
 
         val listener = object : MovieListener {
             override fun onDeleteMovie(movie: MovieDB) {
@@ -39,11 +39,9 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onListClick(id: Int) {
-                val intent = Intent(applicationContext, DetailsFragment::class.java)
-                val bundle = Bundle()
-                bundle.putInt("ID", id)
-                intent.putExtras(bundle)
-                startActivity(intent)
+                val action = FavoriteFragmentDirections.navDetails(id)
+
+                findNavController().navigate(action)
             }
         }
         adapter.attachListener(listener)
@@ -53,17 +51,16 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
         initSearchBar()
         viewModel.listFavorites()
 
-
-        setContentView(binding.root)
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.listFavorites()
 
-        viewModel.movies.observe(this, Observer {
+        viewModel.movies.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             binding.recyclerView.adapter = adapter
             adapter.submitList(it)
         })
@@ -71,7 +68,7 @@ class FavoritesActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        finish()
+        findNavController().navigateUp()
     }
 
     private fun initSearchBar() {

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.ActivityMainBinding
+import com.example.igormattos.overmovie.ui.view.dashboard.DashboardActivity
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,18 +46,18 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.fabFavorites.setOnClickListener {
-            startActivity(Intent(this, FavoritesActivity::class.java))
+            navController.navigate(R.id.nav_favorites)
         }
         binding.fabLogout.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("Log out")
-                .setMessage("Are you sure you want to log out?")
-                .setPositiveButton("LOG OUT"){ _, _ ->
+                .setTitle(getString(R.string.log_out_title))
+                .setMessage(getString(R.string.log_out_message))
+                .setPositiveButton(getString(R.string.log_out)){ _, _ ->
                     viewModel.logout()
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
                 }
-                .setNeutralButton("CANCEL", null)
+                .setNeutralButton(getString(R.string.cancel), null)
                 .show()
         }
     }

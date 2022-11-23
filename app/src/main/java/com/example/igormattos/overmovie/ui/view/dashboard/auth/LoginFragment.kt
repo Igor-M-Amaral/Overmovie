@@ -1,15 +1,18 @@
-package com.example.igormattos.overmovie.ui.view
+package com.example.igormattos.overmovie.ui.view.dashboard.auth
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.databinding.ActivityLoginBinding
+import com.example.igormattos.overmovie.databinding.FragmentTabLoginBinding
+import com.example.igormattos.overmovie.ui.view.MainActivity
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
 import com.example.igormattos.overmovie.utils.methods.UtilsMethods
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,27 +23,25 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: FragmentTabLoginBinding
     private val viewModel: AuthViewModel by viewModel()
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-        supportActionBar?.hide()
+        binding = FragmentTabLoginBinding.inflate(layoutInflater)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
         binding.textForget.setOnClickListener {
             //TODO
@@ -52,10 +53,8 @@ class LoginActivity : AppCompatActivity() {
             singInGoogle()
         }
 
-        binding.textRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
-        }
+
+        return binding.root
     }
 
     override fun onResume() {
@@ -83,15 +82,15 @@ class LoginActivity : AppCompatActivity() {
             if (it) {
                 binding.buttonLogin.isEnabled = true
                 binding.progressCircular.visibility = View.GONE
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                startActivity(Intent(context, MainActivity::class.java))
+                requireActivity().finish()
             }
         })
 
         viewModel.message.observe(this, Observer {
             binding.buttonLogin.isEnabled = true
             binding.progressCircular.visibility = View.GONE
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
 
         })
     }
@@ -112,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.loginWithGoogle(account)
             }
         } else {
-            Toast.makeText(this, task.exception.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, task.exception.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -120,5 +119,4 @@ class LoginActivity : AppCompatActivity() {
         val intent = googleSignInClient.signInIntent
         launcher.launch(intent)
     }
-
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.example.igormattos.overmovie.databinding.ActivitySplashScreenBinding
+import com.example.igormattos.overmovie.ui.view.dashboard.DashboardActivity
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,7 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     finish()
                 } else {
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     finish()
                 }

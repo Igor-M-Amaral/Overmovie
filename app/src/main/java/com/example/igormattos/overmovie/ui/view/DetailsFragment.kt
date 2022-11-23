@@ -82,7 +82,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
                     val video = YoutubePlay(viewModel.videos.value!!.results.last().key)
                     video.show(childFragmentManager, "Video")
                 }else{
-                    Toast.makeText(activity, "Trailer not available", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, getString(R.string.trailer_not_availabe), Toast.LENGTH_LONG).show()
                 }
             }
         }

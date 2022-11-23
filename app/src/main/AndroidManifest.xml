@@ -17,13 +17,13 @@
         android:theme="@style/Theme.TvShowApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.dashboard.DashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.view.FavoritesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.SplashScreenActivity"
@@ -34,10 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.view.DetailsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-            android:exported="false" />
         <activity
             android:name=".ui.view.MainActivity"
             android:exported="true" />

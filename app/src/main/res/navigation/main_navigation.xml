@@ -75,4 +75,14 @@
             app:destination="@id/nav_details" />
     </fragment>
 
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.example.igormattos.overmovie.ui.view.FavoriteFragment"
+        tools:layout="@layout/fragment_favorite"
+        android:label="Favorites">
+        <action
+            android:id="@+id/nav_details"
+            app:destination="@id/nav_details" />
+    </fragment>
+
 </navigation>
