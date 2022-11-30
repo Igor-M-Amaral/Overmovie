@@ -7,7 +7,7 @@ import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.utils.Constants
 import java.lang.Exception
 
-class PopularPagingSource(private val service: MovieService, private val filter: String) : PagingSource<Int, MoviesResult>() {
+class MoviePagingSource(private val service: MovieService, private val filter: String) : PagingSource<Int, MoviesResult>() {
     override fun getRefreshKey(state: PagingState<Int, MoviesResult>): Int? {
         return null
     }

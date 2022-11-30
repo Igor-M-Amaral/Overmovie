@@ -8,7 +8,7 @@ import com.example.igormattos.overmovie.data.model.CastModel
 import com.example.igormattos.overmovie.data.model.MovieVideo
 import com.example.igormattos.overmovie.data.model.MoviesModel
 import com.example.igormattos.overmovie.data.model.MoviesResult
-import com.example.igormattos.overmovie.data.paging.PopularPagingSource
+import com.example.igormattos.overmovie.data.paging.MoviePagingSource
 import com.example.igormattos.overmovie.data.paging.SearchPagingSource
 import com.example.igormattos.overmovie.data.paging.TrendingPagingSource
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class MovieRepositoryImpl(private val service: MovieService) : MovieRepository {
 
     override fun getMovieList(filter: String): Flow<PagingData<MoviesResult>> {
         val request = Pager(PagingConfig(pageSize = 1)) {
-            PopularPagingSource(service, filter)
+            MoviePagingSource(service, filter)
         }.flow
         return request
     }
