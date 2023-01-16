@@ -1,11 +1,11 @@
 package com.example.igormattos.overmovie.ui.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -13,11 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.databinding.HomeFragmentBinding
 import com.example.igormattos.overmovie.utils.Constants
-import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.data.paging.LoaderAdapter
-import com.example.igormattos.overmovie.utils.listener.MovieListener
+import com.example.igormattos.overmovie.databinding.FragmentHomeBinding
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.MovieAdapter
 import com.example.igormattos.overmovie.ui.viewmodel.MovieListViewModel
 import kotlinx.coroutines.launch
@@ -25,9 +23,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: FragmentHomeBinding
     private val viewModel: MovieListViewModel by viewModel()
-    private var adapter = MovieAdapter()
+    private var adapter = MovieAdapter { movieId ->
+        onItemClicked(movieId)
+    }
 
     private lateinit var searchView: SearchView
     private val progressBar: ProgressBar by lazy {
@@ -41,29 +41,18 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding = HomeFragmentBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         movieFilter = requireArguments().getString(Constants.BUNDLE.MOVIEFILTER, "popular")
 
         initSearchBar()
         observe()
-
-
-        val listener = object : MovieListener {
-            override fun onDeleteMovie(movie: MovieDB) {
-            }
-
-            override fun onListClick(id: Int) {
-                val action = HomeFragmentDirections.navDetails(id)
-
-                findNavController().navigate(action)
-            }
-        }
-
-        adapter.attachListener(listener)
-
-        return binding.root
     }
 
     override fun onResume() {
@@ -80,7 +69,7 @@ class HomeFragment : Fragment() {
                     header = LoaderAdapter(),
                     footer = LoaderAdapter()
                 )
-                listResult.collect{
+                listResult.collect {
                     adapter.submitData(it)
                 }
             }
@@ -91,14 +80,10 @@ class HomeFragment : Fragment() {
                 binding.recyclerView.layoutManager =
                     GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
                 binding.recyclerView.adapter = adapter
-                listResult.collect{
+                listResult.collect {
                     adapter.submitData(it)
                 }
             }
-        })
-
-        viewModel.nameTitle.observe(viewLifecycleOwner, Observer {
-            binding.homeToolbar.title = it
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
@@ -106,8 +91,16 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun onItemClicked(movieId: Int) {
+        val action = HomeFragmentDirections.navDetails(movieId)
+
+        findNavController().navigate(action)
+    }
+
     private fun initSearchBar() {
-        with(binding.homeToolbar) {
+
+        with(requireActivity().findViewById<Toolbar>(R.id.toolbar)) {
+            this.menu.clear()
             this.inflateMenu(R.menu.search_menu)
 
             val searchItem = menu.findItem(R.id.menu_search)
@@ -132,6 +125,4 @@ class HomeFragment : Fragment() {
             })
         }
     }
-
-
 }

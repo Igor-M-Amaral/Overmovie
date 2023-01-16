@@ -15,21 +15,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.data.model.MovieDB
 import com.example.igormattos.overmovie.databinding.FragmentDetailsBinding
 import com.example.igormattos.overmovie.ui.adapter.castadapter.CastAdapter
 import com.example.igormattos.overmovie.ui.adapter.movieadapter.SimilarAdapter
 import com.example.igormattos.overmovie.ui.video.YoutubePlay
 import com.example.igormattos.overmovie.ui.viewmodel.MovieDetailsViewModel
 import com.example.igormattos.overmovie.utils.Constants
-import com.example.igormattos.overmovie.utils.listener.MovieListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModel()
-    private val adapterSimilar = SimilarAdapter()
+    private val adapterSimilar = SimilarAdapter{ movieId ->
+        onItemClicked(movieId)
+    }
+
     private val adapterCast = CastAdapter()
     private val args: DetailsFragmentArgs by navArgs()
     private val progressBar: ProgressBar by lazy {
@@ -40,31 +41,24 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
+        binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-        binding = FragmentDetailsBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.fabFavoriteButton.setOnClickListener(this)
         binding.fabPlay.setOnClickListener(this)
         binding.buttonBack.setOnClickListener(this)
 
-        val listener = object : MovieListener {
-            override fun onDeleteMovie(movie: MovieDB){}
-
-            override fun onListClick(id: Int) {
-                val action = DetailsFragmentDirections.actionNavDetailsSelf(id)
-
-                findNavController().navigate(action)
-            }
-        }
         viewModel.progressBar.observe(viewLifecycleOwner, Observer {
             if (it) showProgressBar() else (hideProgressBar())
         })
 
-        adapterSimilar.attachListener(listener)
 
         observer()
-
-        return binding.root
     }
 
     override fun onClick(v: View) {
@@ -88,6 +82,13 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         }
 
     }
+
+    private fun onItemClicked(movieId: Int) {
+        val action = DetailsFragmentDirections.actionNavDetailsSelf(movieId)
+
+        findNavController().navigate(action)
+    }
+
 
     private fun observer() {
         val id = args.id

@@ -1,5 +1,6 @@
 package com.example.igormattos.overmovie.data.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.igormattos.overmovie.utils.Constants
@@ -8,8 +9,11 @@ import com.example.igormattos.overmovie.utils.Constants
 data class MovieDB(
     @PrimaryKey
     val id: Int,
-    val poster_path: String,
-    val vote_average: Float,
+    @ColumnInfo(name = "poster_path")
+    val posterPath: String,
+    @ColumnInfo(name = "voteAverage")
+    val voteAverage: Float,
     val title: String,
-    val backdrop_path: String
+    @ColumnInfo(name = "backdrop_path")
+    val backdropPath: String
 )

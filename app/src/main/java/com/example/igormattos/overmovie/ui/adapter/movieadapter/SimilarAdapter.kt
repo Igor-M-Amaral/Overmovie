@@ -2,28 +2,20 @@ package com.example.igormattos.overmovie.ui.adapter.movieadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.igormattos.overmovie.data.model.MoviesResult
 import com.example.igormattos.overmovie.databinding.RowMoviesBinding
-import com.example.igormattos.overmovie.utils.listener.MovieListener
 
-class SimilarAdapter: ListAdapter<MoviesResult, MovieViewHolder>(MoviesResultCallBack()) {
-
-    private lateinit var listener: MovieListener
+class SimilarAdapter(private val onclick: (Int) -> Unit): ListAdapter<MoviesResult, MovieViewHolder>(MoviesResultCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(RowMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false), listener)
+        return MovieViewHolder(RowMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
-        movie?.let { holder.bind(it) }
-    }
-
-    fun attachListener(movieListener: MovieListener) {
-        listener = movieListener
+        movie?.let { holder.bind(it, onclick) }
     }
 
     class MoviesResultCallBack : DiffUtil.ItemCallback<MoviesResult>() {

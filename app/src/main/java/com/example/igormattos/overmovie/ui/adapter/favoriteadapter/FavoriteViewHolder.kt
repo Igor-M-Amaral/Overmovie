@@ -8,17 +8,16 @@ import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.RowFavoritesBinding
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MovieDB
-import com.example.igormattos.overmovie.utils.listener.MovieListener
 
-class FavoriteViewHolder(private val binding: RowFavoritesBinding, private val listener: MovieListener) :
+class FavoriteViewHolder(private val binding: RowFavoritesBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private var movieTitle = binding.textTitle
     private var movieRate = binding.textRate
 
-    fun bind(movie: MovieDB) {
+    fun bind(movie: MovieDB, onclick: (Int) -> Unit, onClickDelete: (MovieDB) -> Unit) {
         movieTitle.text = movie.title
-        movieRate.text = String.format("%.1f", movie.vote_average)
+        movieRate.text = String.format("%.1f", movie.voteAverage)
 
         val requestOption = RequestOptions()
             .placeholder(R.drawable.poster_placeholder)
@@ -26,28 +25,30 @@ class FavoriteViewHolder(private val binding: RowFavoritesBinding, private val l
 
         Glide.with(itemView.context)
             .applyDefaultRequestOptions(requestOption)
-            .load(Constants.URL.IMAGE_BASE + movie.poster_path)
+            .load(Constants.URL.IMAGE_BASE + movie.posterPath)
             .into(binding.imgMoviePoster)
+
+
+        Glide.with(itemView.context)
+            .applyDefaultRequestOptions(requestOption)
+            .load(Constants.URL.IMAGE_BASE + movie.backdropPath)
+            .into(binding.imgBack)
+
+        binding.imgMoviePoster.setOnClickListener {
+            onclick(movie.id)
+        }
 
         binding.imgFavorite.setOnClickListener {
             AlertDialog.Builder(itemView.context)
                 .setTitle("Remove")
                 .setMessage("Do you want to remove this movie?")
                 .setPositiveButton("Yes") { _, _ ->
-                    listener.onDeleteMovie(movie)
+                    onClickDelete(movie)
                 }
                 .setNeutralButton("Cancel", null)
                 .show()
             true
         }
 
-        binding.imgMoviePoster.setOnClickListener {
-            listener.onListClick(movie.id)
-        }
-
-        Glide.with(itemView.context)
-            .applyDefaultRequestOptions(requestOption)
-            .load(Constants.URL.IMAGE_BASE + movie.backdrop_path)
-            .into(binding.imgBack)
     }
 }

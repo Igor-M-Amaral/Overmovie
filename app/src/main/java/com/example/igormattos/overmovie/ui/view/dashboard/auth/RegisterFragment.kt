@@ -22,14 +22,13 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-
-        binding = FragmentRegisterBinding.inflate(layoutInflater)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.buttonContinue.setOnClickListener {
             val email = binding.editEmail.text.toString()
@@ -44,7 +43,7 @@ class RegisterFragment : Fragment() {
 
                 viewModel.register(email, password)
 
-                viewModel.verify.observe(this, Observer {
+                viewModel.verify.observe(viewLifecycleOwner, Observer {
                     if (it) {
                         binding.buttonContinue.isEnabled = true
                         binding.progressCircular.visibility = View.GONE
@@ -58,7 +57,7 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        viewModel.message.observe(this, Observer {
+        viewModel.message.observe(viewLifecycleOwner, Observer {
             binding.buttonContinue.isEnabled = true
             binding.progressCircular.visibility = View.GONE
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()

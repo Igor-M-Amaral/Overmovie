@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.lang.NullPointerException
-import java.util.concurrent.TimeoutException
 
 class MovieListViewModel(private val repository: MovieRepositoryImpl) : ViewModel() {
 
@@ -25,10 +24,7 @@ class MovieListViewModel(private val repository: MovieRepositoryImpl) : ViewMode
     private val _search = MutableLiveData<Flow<PagingData<MoviesResult>>>(emptyFlow())
     val search: LiveData<Flow<PagingData<MoviesResult>>> = _search
 
-    val nameTitle = MutableLiveData<String>()
-
     val errorMessage = MutableLiveData<String>()
-
 
     fun listMovie(filter: String) {
         moviefilter = filter
@@ -37,12 +33,10 @@ class MovieListViewModel(private val repository: MovieRepositoryImpl) : ViewMode
                 if (filter == "trending") {
                     val result = repository.getTrendingMovies()
                     _movies.postValue(result.cachedIn(viewModelScope))
-                    nameTitle.postValue(filter.uppercase())
 
                 } else {
                     val result = repository.getMovieList(filter)
                     _movies.postValue(result.cachedIn(viewModelScope))
-                    nameTitle.postValue(filter.uppercase())
                 }
             } catch (e: Exception) {
                 errorMessage.postValue(e.message)

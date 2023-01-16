@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/nav_upcoming"
         android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        android:label="Upcoming"
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="moviefilter"
             android:defaultValue="upcoming"
@@ -23,8 +23,8 @@
     <fragment
         android:id="@+id/nav_popular"
         android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        android:label="Popular"
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="moviefilter"
             android:defaultValue="popular"
@@ -37,8 +37,8 @@
     <fragment
         android:id="@+id/nav_trending"
         android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        android:label="Trending"
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="moviefilter"
             android:defaultValue="trending"
@@ -51,8 +51,8 @@
     <fragment
         android:id="@+id/nav_rated"
         android:name="com.example.igormattos.overmovie.ui.view.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        android:label="Top Rated"
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="moviefilter"
             android:defaultValue="top_rated"

@@ -34,8 +34,13 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentTabLoginBinding.inflate(layoutInflater)
+        binding = FragmentTabLoginBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -54,7 +59,6 @@ class LoginFragment : Fragment() {
         }
 
 
-        return binding.root
     }
 
     override fun onResume() {

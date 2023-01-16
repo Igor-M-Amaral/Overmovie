@@ -20,12 +20,6 @@
             android:name=".ui.view.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.view.LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.view.SplashScreenActivity"
             android:exported="true">
             <intent-filter>

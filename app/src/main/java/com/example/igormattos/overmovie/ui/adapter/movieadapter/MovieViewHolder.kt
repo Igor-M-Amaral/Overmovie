@@ -7,22 +7,21 @@ import com.example.igormattos.overmovie.R
 import com.example.igormattos.overmovie.databinding.RowMoviesBinding
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.MoviesResult
-import com.example.igormattos.overmovie.utils.listener.MovieListener
 
 
-class MovieViewHolder(private val binding: RowMoviesBinding, private val listener: MovieListener) : RecyclerView.ViewHolder(binding.root) {
+class MovieViewHolder(private val binding: RowMoviesBinding) : RecyclerView.ViewHolder(binding.root) {
 
     private var movieTitle = binding.textTitle
     private val date = binding.textReleaseDate
 
-    fun bind(moviesResult: MoviesResult) {
+    fun bind(moviesResult: MoviesResult, onclick: (Int) -> Unit) {
 
         movieTitle.text = moviesResult.title
         date.text = moviesResult.release_date
 
         val requestOption = RequestOptions()
             .placeholder(R.drawable.poster_placeholder)
-            .error(R.drawable.person_placeholder)
+            .error(R.drawable.poster_placeholder)
 
         Glide.with(itemView.context)
             .applyDefaultRequestOptions(requestOption)
@@ -30,7 +29,7 @@ class MovieViewHolder(private val binding: RowMoviesBinding, private val listene
             .into(binding.imgMoviePoster)
 
         binding.imgMoviePoster.setOnClickListener {
-            listener.onListClick(moviesResult.id)
+            onclick(moviesResult.id)
         }
 
     }
