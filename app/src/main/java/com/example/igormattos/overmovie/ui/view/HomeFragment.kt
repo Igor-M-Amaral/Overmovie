@@ -98,7 +98,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initSearchBar() {
-
         with(requireActivity().findViewById<Toolbar>(R.id.toolbar)) {
             this.menu.clear()
             this.inflateMenu(R.menu.search_menu)

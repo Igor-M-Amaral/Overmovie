@@ -86,7 +86,6 @@ class FavoriteFragment : Fragment(), View.OnClickListener {
 
             searchView.isIconified = false
 
-
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     val searchString = searchView.query.toString()

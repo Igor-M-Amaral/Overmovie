@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.view.dashboard.auth.RegisterFragment">
+    tools:context=".ui.view.RegisterFragment">
 
     <EditText
         android:id="@+id/edit_email"
@@ -16,7 +16,6 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="8dp"
-        android:textColor="@color/white"
         android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +34,6 @@
         android:hint="Confirm your password"
         android:padding="8dp"
         android:inputType="textPassword"
-        android:textColor="@color/white"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +51,6 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="8dp"
-        android:textColor="@color/white"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

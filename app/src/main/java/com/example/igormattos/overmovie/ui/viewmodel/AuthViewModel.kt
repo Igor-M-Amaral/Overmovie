@@ -38,7 +38,6 @@ class AuthViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
         }
     }
 
-
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {

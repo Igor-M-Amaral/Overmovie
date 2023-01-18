@@ -22,40 +22,42 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        tools:title="Upcoming"
         android:layout_height="wrap_content"
         android:background="@color/red"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:title="Upcoming" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:labelVisibilityMode="selected"
         android:background="@color/red"
         app:itemIconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/activity_main_menu"/>
+        app:menu="@menu/activity_main_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        android:layout_marginBottom="12dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_favorites"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/fab_expand"
         app:layout_constraintEnd_toEndOf="@+id/fab_expand"
         app:srcCompat="@drawable/ic_favorite" />
@@ -63,9 +65,9 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_logout"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/fab_favorites"
         app:layout_constraintEnd_toEndOf="@+id/fab_favorites"
         app:srcCompat="@drawable/ic_logout" />

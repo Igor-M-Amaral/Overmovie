@@ -1,4 +1,4 @@
-package com.example.igormattos.overmovie.ui.view.dashboard.auth
+package com.example.igormattos.overmovie.ui.view
 
 import android.app.Activity
 import android.content.Intent
@@ -10,9 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.igormattos.overmovie.R
-import com.example.igormattos.overmovie.databinding.FragmentTabLoginBinding
-import com.example.igormattos.overmovie.ui.view.MainActivity
+import com.example.igormattos.overmovie.databinding.FragmentLoginBinding
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
 import com.example.igormattos.overmovie.utils.methods.UtilsMethods
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -25,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentTabLoginBinding
+    private lateinit var binding: FragmentLoginBinding
     private val viewModel: AuthViewModel by viewModel()
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -34,7 +35,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentTabLoginBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -46,16 +47,26 @@ class LoginFragment : Fragment() {
             .requestEmail()
             .build()
 
+
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
 
         binding.textForget.setOnClickListener {
-            //TODO
+
+            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+
+            findNavController()
+                .navigate(action)
         }
 
         binding.imageGoogle.setOnClickListener {
             binding.buttonLogin.isEnabled = false
             binding.progressCircular.visibility = View.VISIBLE
             singInGoogle()
+        }
+
+        binding.imageTwitter.setOnClickListener {
+            Toast.makeText(context, "TODO", Toast.LENGTH_LONG).show()
+
         }
 
 
@@ -86,8 +97,10 @@ class LoginFragment : Fragment() {
             if (it) {
                 binding.buttonLogin.isEnabled = true
                 binding.progressCircular.visibility = View.GONE
-                startActivity(Intent(context, MainActivity::class.java))
-                requireActivity().finish()
+
+                findNavController().popBackStack(R.id.navigation_auth, true)
+                findNavController().navigate(R.id.navigation_bottom)
+
             }
         })
 

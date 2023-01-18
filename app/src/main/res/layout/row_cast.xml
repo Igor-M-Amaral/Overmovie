@@ -33,11 +33,11 @@
 
             <ImageView
                 android:id="@+id/img_castPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                tools:src="@drawable/cast_photo"
+                tools:src="@tools:sample/avatars"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,9:16" />
 

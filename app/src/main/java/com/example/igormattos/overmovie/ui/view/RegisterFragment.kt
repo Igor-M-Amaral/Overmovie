@@ -1,4 +1,4 @@
-package com.example.igormattos.overmovie.ui.view.dashboard.auth
+package com.example.igormattos.overmovie.ui.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.igormattos.overmovie.databinding.FragmentRegisterBinding
 import com.example.igormattos.overmovie.ui.viewmodel.AuthViewModel
 import com.example.igormattos.overmovie.utils.methods.UtilsMethods
@@ -45,8 +46,9 @@ class RegisterFragment : Fragment() {
 
                 viewModel.verify.observe(viewLifecycleOwner, Observer {
                     if (it) {
-                        binding.buttonContinue.isEnabled = true
-                        binding.progressCircular.visibility = View.GONE
+                        registrationSuccessful()
+                        findNavController()
+                            .navigateUp()
                     }
                 })
             } else {
@@ -57,6 +59,9 @@ class RegisterFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun registrationSuccessful() {
         viewModel.message.observe(viewLifecycleOwner, Observer {
             binding.buttonContinue.isEnabled = true
             binding.progressCircular.visibility = View.GONE
