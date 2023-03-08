@@ -27,11 +27,10 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: MovieDetailsViewModel by viewModel()
-    private val adapterSimilar = SimilarAdapter{ movieId ->
+    private val adapterSimilar = SimilarAdapter { movieId ->
         onItemClicked(movieId)
     }
 
-    private val adapterCast = CastAdapter()
     private val args: DetailsFragmentArgs by navArgs()
     private val progressBar: ProgressBar by lazy {
         binding.progressbar
@@ -40,7 +39,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -57,7 +56,6 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             if (it) showProgressBar() else (hideProgressBar())
         })
 
-
         observer()
     }
 
@@ -71,16 +69,20 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             R.id.button_back -> {
                 findNavController().navigateUp()
             }
+
             R.id.fabPlay -> {
-                if (viewModel.videos.value != null && viewModel.videos.value!!.results.isNotEmpty()){
+                if (viewModel.videos.value != null && viewModel.videos.value!!.results.isNotEmpty()) {
                     val video = YoutubePlay(viewModel.videos.value!!.results.last().key)
                     video.show(childFragmentManager, "Video")
-                }else{
-                    Toast.makeText(activity, getString(R.string.trailer_not_availabe), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(
+                        activity,
+                        getString(R.string.trailer_not_availabe),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
-
     }
 
     private fun onItemClicked(movieId: Int) {
@@ -91,18 +93,15 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
 
     private fun observer() {
-        val id = args.id
-
-        viewModel.getMovieById(id)
-        viewModel.getCastList(id)
-        viewModel.getSimilarMovies(id)
-        viewModel.getVideoById(id)
+        viewModel.getMovieById(args.id)
+        viewModel.getCastList(args.id)
+        viewModel.getSimilarMovies(args.id)
+        viewModel.getVideoById(args.id)
 
         viewModel.cast.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            binding.recyclerView.adapter = adapterCast
-            adapterCast.setCastList(it.cast)
+            binding.recyclerView.adapter = CastAdapter(it.cast)
         })
 
         viewModel.similar.observe(viewLifecycleOwner, Observer {

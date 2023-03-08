@@ -68,8 +68,6 @@ class LoginFragment : Fragment() {
             Toast.makeText(context, "TODO", Toast.LENGTH_LONG).show()
 
         }
-
-
     }
 
     override fun onResume() {

@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.igormattos.overmovie.databinding.RowCastBinding
 import com.example.igormattos.overmovie.data.model.CastResult
 
-class CastAdapter: RecyclerView.Adapter<CastViewHolder>() {
-
-    private var castList = mutableListOf<CastResult>()
+class CastAdapter(private val castList: List<CastResult>) : RecyclerView.Adapter<CastViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
         return CastViewHolder(RowCastBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -21,9 +19,5 @@ class CastAdapter: RecyclerView.Adapter<CastViewHolder>() {
 
     override fun getItemCount(): Int {
         return castList.size
-    }
-
-    fun setCastList(movie: List<CastResult>){
-        this.castList = movie.toMutableList()
     }
 }

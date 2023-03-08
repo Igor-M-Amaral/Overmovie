@@ -8,13 +8,13 @@ import com.example.igormattos.overmovie.databinding.RowCastBinding
 import com.example.igormattos.overmovie.utils.Constants
 import com.example.igormattos.overmovie.data.model.CastResult
 
-class CastViewHolder(private val bindind: RowCastBinding) : RecyclerView.ViewHolder(bindind.root) {
+class CastViewHolder(private val binding: RowCastBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private var name = bindind.textName
+    private var name = binding.textName
 
-    private var characterName = bindind.textCharacter
+    private var characterName = binding.textCharacter
 
-    private var department = bindind.textDepartment
+    private var department = binding.textDepartment
 
     fun bind(cast: CastResult) {
 
@@ -22,14 +22,14 @@ class CastViewHolder(private val bindind: RowCastBinding) : RecyclerView.ViewHol
         characterName.text = cast.character
         department.text = cast.known_for_department
 
-        val resquestOption = RequestOptions()
+        val requestOptions = RequestOptions()
             .placeholder(R.drawable.person_placeholder)
             .error(R.drawable.person_placeholder)
 
         Glide.with(itemView.context)
-            .applyDefaultRequestOptions(resquestOption)
+            .applyDefaultRequestOptions(requestOptions)
             .load(Constants.URL.IMAGE_BASE + cast.profile_path)
-            .into(bindind.imgCastPhoto)
+            .into(binding.imgCastPhoto)
 
 
     }

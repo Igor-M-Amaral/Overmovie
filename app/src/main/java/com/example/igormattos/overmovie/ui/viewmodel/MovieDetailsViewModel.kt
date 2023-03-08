@@ -21,9 +21,6 @@ class MovieDetailsViewModel(
     private val _cast = MutableLiveData<CastModel>()
     val cast: MutableLiveData<CastModel> = _cast
 
-    private var _title = MutableLiveData<String>()
-    val title: LiveData<String> = _title
-
     private val _similar = MutableLiveData<List<MoviesResult>>()
     val similar: LiveData<List<MoviesResult>> = _similar
 

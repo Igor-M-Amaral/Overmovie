@@ -38,6 +38,7 @@ class FavoritesViewModel(private val favoriteDao: FavoriteDao) : ViewModel() {
             try {
                 _movies.postValue(favoriteDao.searchDataBase(searchString))
             } catch (e: NullPointerException) {
+
             }
         }
     }

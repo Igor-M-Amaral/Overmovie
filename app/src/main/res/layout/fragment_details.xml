@@ -196,6 +196,7 @@
         android:id="@+id/fabFavoriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="favorites"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_favorite"
         app:backgroundTint="@color/black"
@@ -208,6 +209,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPlay"
         android:layout_width="wrap_content"
+        android:contentDescription="play"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_play_arrow"
